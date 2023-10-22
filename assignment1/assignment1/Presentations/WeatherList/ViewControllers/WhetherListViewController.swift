@@ -101,6 +101,7 @@ extension WheatherListViewController {
         let seoulWeatherInfoView5 = CityListView(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "27°", minTemperature: "23°")
         let seoulWeatherInfoView6 = CityListView(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "27°", minTemperature: "23°")
         let seoulWeatherInfoView7 = CityListView(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "27°", minTemperature: "23°")
+        
         [seoulWeatherInfoView,seoulWeatherInfoView1,seoulWeatherInfoView2,seoulWeatherInfoView3,seoulWeatherInfoView4,seoulWeatherInfoView5,seoulWeatherInfoView6,seoulWeatherInfoView7].forEach() {
             $0.translatesAutoresizingMaskIntoConstraints = false
             ($0.heightAnchor.constraint(equalToConstant: 120)).isActive = true
@@ -117,7 +118,7 @@ extension WheatherListViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         // 스크롤시 작게 보이는 타이틀
         self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        self.navigationController?.navigationBar.barTintColor = .red
+        self.navigationController?.navigationBar.barTintColor = .black
         // 스크롤 시 보이는 뷰의 백그라운드
         self.navigationController?.navigationBar.prefersLargeTitles = true
         // 라지 사이즈 타이틀이 보이는 것

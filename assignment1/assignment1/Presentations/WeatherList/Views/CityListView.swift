@@ -83,6 +83,7 @@ class CityListView: UIView {
         myLocationLabel.text = "나의 위치"
         myLocationLabel.font = UIFont(name: "SF-Pro", size: 25)
         
+        
 //        locationLabel.text = "나의 위치"
         locationLabel.font = UIFont(name: "SF-Pro", size: 25)
     }
