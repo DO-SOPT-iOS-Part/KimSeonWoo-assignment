@@ -18,15 +18,15 @@ class WheatherDetailMain: UIView {
     
     
     let timelyWeatherInfoView1 = WheatherDetailListView(time: "1", weather: "cloudBolt", temperature: "25°")
-    let timelyWeatherInfoView2 = WheatherDetailListView(time: "2", weather: "cloudBolt", temperature: "24°")
+    let timelyWeatherInfoView2 = WheatherDetailListView(time: "2", weather: "softRain", temperature: "24°")
     let timelyWeatherInfoView3 = WheatherDetailListView(time: "3", weather: "cloudBolt", temperature: "23°")
-    let timelyWeatherInfoView4 = WheatherDetailListView(time: "4", weather: "cloudBolt", temperature: "22°")
-    let timelyWeatherInfoView5 = WheatherDetailListView(time: "5", weather: "cloudBolt", temperature: "21°")
+    let timelyWeatherInfoView4 = WheatherDetailListView(time: "4", weather: "softRain", temperature: "22°")
+    let timelyWeatherInfoView5 = WheatherDetailListView(time: "5", weather: "softRain", temperature: "21°")
     let timelyWeatherInfoView6 = WheatherDetailListView(time: "6", weather: "cloudBolt", temperature: "20°")
     let timelyWeatherInfoView7 = WheatherDetailListView(time: "7", weather: "cloudBolt", temperature: "20°")
-    let timelyWeatherInfoView8 = WheatherDetailListView(time: "8", weather: "cloudBolt", temperature: "21°")
+    let timelyWeatherInfoView8 = WheatherDetailListView(time: "8", weather: "softRain", temperature: "21°")
     let timelyWeatherInfoView9 = WheatherDetailListView(time: "9", weather: "cloudBolt", temperature: "22°")
-    let timelyWeatherInfoView10 = WheatherDetailListView(time: "10", weather: "cloudBolt", temperature: "23°")
+    let timelyWeatherInfoView10 = WheatherDetailListView(time: "10", weather: "softRain", temperature: "23°")
     let timelyWeatherInfoView11 = WheatherDetailListView(time: "11", weather: "cloudBolt", temperature: "24°")
     let timelyWeatherInfoView12 = WheatherDetailListView(time: "12", weather: "cloudBolt", temperature: "25°")
     
