@@ -14,7 +14,7 @@ class WheatherDetailListView: UIView {
     private let timeLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.font = UIFont(name: "SFProDisplay-Regular", size: 17)
+        label.font = UIFont(name: "STIXTwoText", size: 17)
         return label
     }()
     
@@ -27,7 +27,7 @@ class WheatherDetailListView: UIView {
     private let temperatureLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.font = UIFont(name: "SFProDisplay-Medium", size: 19)
+        label.font = UIFont(name: "STIXTwoText", size: 19)
         return label
     }()
     
@@ -50,17 +50,17 @@ class WheatherDetailListView: UIView {
         }
         
         NSLayoutConstraint.activate([
-            timeLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            timeLabel.topAnchor.constraint(equalTo: topAnchor, constant: 15),
             timeLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            weatherImageView.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 10),
+            weatherImageView.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 15),
             weatherImageView.centerXAnchor.constraint(equalTo: timeLabel.centerXAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            temperatureLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+            temperatureLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
             temperatureLabel.centerXAnchor.constraint(equalTo: timeLabel.centerXAnchor)
         ])
     }

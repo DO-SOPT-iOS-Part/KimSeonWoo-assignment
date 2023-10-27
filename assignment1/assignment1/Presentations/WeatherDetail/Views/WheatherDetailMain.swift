@@ -13,6 +13,7 @@ class WheatherDetailMain: UIView {
     private var horizontalWeatherStackView = UIStackView()
     private var lineView = UIView()
     private let descriptionView = UIView()
+    private let horizontalContentView = UIView()
     var bottomBar = BottomAppBar()
     private let backgroundImageView = UIImageView(image: UIImage(named: "background"))
     
@@ -62,43 +63,44 @@ extension WheatherDetailMain {
         
         [cityLabel].forEach {
             $0.textColor = .white
-            $0.text = "cityLabel"
-            $0.font = UIFont(name: "SFProDisplay-Regular", size: 45)
+            $0.text = "의정부시"
+            $0.font = UIFont(name: "STIXTwoText", size: 50)
         }
         
         [tempLabel].forEach {
             $0.textColor = .white
-            $0.text = "tempLabel"
-            $0.font = UIFont(name: "SFProDisplay-Regular", size: 45)
+            $0.text = "21°"
+            $0.font = UIFont(name: "STIXTwoText", size: 75)
         }
         
         [wheatherStatusLabel].forEach {
             $0.textColor = .white
-            $0.text = "wheatherStatusLabel"
-            $0.font = UIFont(name: "SFProDisplay-Regular", size: 45)
+            $0.text = "흐림"
+            $0.font = UIFont(name: "STIXTwoText", size: 25)
         }
         
         [minTempLabel].forEach {
             $0.textColor = .white
-            $0.text = "minTempLabel"
-            $0.font = UIFont(name: "SFProDisplay-Regular", size: 45)
+            $0.text = "최저:19°"
+            $0.font = UIFont(name: "STIXTwoText", size: 23)
         }
         
         [maxTempLabel].forEach {
             $0.textColor = .white
-            $0.text = "maxTempLabel"
-            $0.font = UIFont(name: "SF-Pro", size: 45)
+            $0.text = "최고:29°"
+            $0.font = UIFont(name: "STIXTwoText", size: 23)
         }
         
         [wheatherDescriptionLabel].forEach {
             $0.textColor = .white
-            $0.text = "hello?"
-            $0.font = UIFont(name: "SFProDisplay-Regular", size: 20)
+            $0.text = "08:00~09:00에 강우 상태가, 18:00에 한때 흐린 상태가 예상됩니다."
+            $0.font = UIFont(name: "STIXTwoText", size: 20)
+            $0.numberOfLines = 0
         }
         
         [descriptionView].forEach {
-            $0.backgroundColor = UIColor.black.withAlphaComponent(0.8)
-            $0.layer.cornerRadius = 30
+            $0.backgroundColor = UIColor.black.withAlphaComponent(0.1)
+            $0.layer.cornerRadius = 20
         }
         [lineView].forEach{
             $0.backgroundColor = UIColor.white.withAlphaComponent(0.3)
@@ -106,8 +108,8 @@ extension WheatherDetailMain {
         
         [timelyWeatherInfoView1, timelyWeatherInfoView2, timelyWeatherInfoView3, timelyWeatherInfoView4, timelyWeatherInfoView5, timelyWeatherInfoView6, timelyWeatherInfoView7,timelyWeatherInfoView8, timelyWeatherInfoView9, timelyWeatherInfoView10, timelyWeatherInfoView11, timelyWeatherInfoView12].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
-            ($0.widthAnchor.constraint(equalToConstant: 45)).isActive = true
-            ($0.heightAnchor.constraint(equalToConstant: 120)).isActive = true
+            ($0.widthAnchor.constraint(equalToConstant: 65)).isActive = true
+            ($0.heightAnchor.constraint(equalToConstant: 130)).isActive = true
             horizontalWeatherStackView.addArrangedSubview($0)
         }
     }
@@ -128,7 +130,7 @@ extension WheatherDetailMain {
         verticalContentView.addSubview(maxTempLabel)
         verticalContentView.addSubview(descriptionView)
         
-        [cityLabel,tempLabel,wheatherStatusLabel,minTempLabel,maxTempLabel,descriptionView,horizontalScrollView,wheatherDescriptionLabel,horizontalWeatherStackView,lineView].forEach {
+        [cityLabel,tempLabel,wheatherStatusLabel,minTempLabel,maxTempLabel,descriptionView,horizontalScrollView,wheatherDescriptionLabel,horizontalWeatherStackView,lineView,horizontalContentView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
@@ -136,7 +138,9 @@ extension WheatherDetailMain {
         descriptionView.addSubview(lineView)
         descriptionView.addSubview(horizontalScrollView)
         
-        horizontalScrollView.addSubview(horizontalWeatherStackView)
+        horizontalScrollView.addSubview(horizontalContentView)
+        
+        horizontalContentView.addSubview(horizontalWeatherStackView)
         
         
         // verticalScrollView 제약 조건 설정
@@ -193,18 +197,16 @@ extension WheatherDetailMain {
             descriptionView.topAnchor.constraint(equalTo: maxTempLabel.bottomAnchor, constant: 50),
             descriptionView.leadingAnchor.constraint(equalTo: verticalContentView.leadingAnchor, constant: 17),
             descriptionView.trailingAnchor.constraint(equalTo: verticalContentView.trailingAnchor, constant: -17),
-        ])
+                ])
         
         // wheatherDescriptionLabel, lineView 제약 조건 설정
         NSLayoutConstraint.activate([
-            wheatherDescriptionLabel.topAnchor.constraint(equalTo: descriptionView.topAnchor, constant: 8),
+            wheatherDescriptionLabel.topAnchor.constraint(equalTo: descriptionView.topAnchor, constant: 20),
             wheatherDescriptionLabel.leadingAnchor.constraint(equalTo: descriptionView.leadingAnchor, constant: 13),
-            wheatherDescriptionLabel.trailingAnchor.constraint(equalTo: descriptionView.trailingAnchor, constant: -13),
-            wheatherDescriptionLabel.heightAnchor.constraint(equalToConstant: 20)
-        ])
+            wheatherDescriptionLabel.trailingAnchor.constraint(equalTo: descriptionView.trailingAnchor, constant: -13), ])
         
         NSLayoutConstraint.activate([
-            lineView.topAnchor.constraint(equalTo: wheatherDescriptionLabel.bottomAnchor, constant: 10),
+            lineView.topAnchor.constraint(equalTo: wheatherDescriptionLabel.bottomAnchor, constant: 20),
             lineView.leadingAnchor.constraint(equalTo: descriptionView.leadingAnchor, constant: 13),
             lineView.trailingAnchor.constraint(equalTo: descriptionView.trailingAnchor, constant: -13),
             lineView.heightAnchor.constraint(equalToConstant: 0.3)
@@ -218,17 +220,23 @@ extension WheatherDetailMain {
             horizontalScrollView.trailingAnchor.constraint(equalTo: descriptionView.trailingAnchor),
         ])
         
-        // horizontalWeatherStackView 제약 조건 설정
         NSLayoutConstraint.activate([
-            horizontalWeatherStackView.topAnchor.constraint(equalTo: horizontalScrollView.contentLayoutGuide.topAnchor),
-            horizontalWeatherStackView.bottomAnchor.constraint(equalTo: horizontalScrollView.contentLayoutGuide.bottomAnchor),
-            horizontalWeatherStackView.leadingAnchor.constraint(equalTo: horizontalScrollView.contentLayoutGuide.leadingAnchor),
-            horizontalWeatherStackView.trailingAnchor.constraint(equalTo: horizontalScrollView.contentLayoutGuide.trailingAnchor),
+            horizontalContentView.topAnchor.constraint(equalTo: horizontalScrollView.contentLayoutGuide.topAnchor),
+            horizontalContentView.bottomAnchor.constraint(equalTo: horizontalScrollView.contentLayoutGuide.bottomAnchor),
+            horizontalContentView.leadingAnchor.constraint(equalTo: horizontalScrollView.contentLayoutGuide.leadingAnchor),
+            horizontalContentView.trailingAnchor.constraint(equalTo: horizontalScrollView.contentLayoutGuide.trailingAnchor),
+            horizontalContentView.heightAnchor.constraint(equalTo: horizontalScrollView.heightAnchor),
         ])
         
-        horizontalWeatherStackView.heightAnchor.constraint(equalTo: horizontalScrollView.heightAnchor).isActive = true
-        let contentViewWdith = horizontalWeatherStackView.widthAnchor.constraint(greaterThanOrEqualTo: descriptionView.widthAnchor)
-        contentViewWdith.priority = .defaultLow
-        contentViewWdith.isActive = true
+        NSLayoutConstraint.activate([
+            horizontalWeatherStackView.topAnchor.constraint(equalTo: horizontalContentView.topAnchor, constant: 7),
+            horizontalWeatherStackView.leadingAnchor.constraint(equalTo: horizontalContentView.leadingAnchor, constant: 16),
+            horizontalWeatherStackView.trailingAnchor.constraint(equalTo: horizontalContentView.trailingAnchor, constant: -16),
+            horizontalWeatherStackView.bottomAnchor.constraint(equalTo: horizontalContentView.bottomAnchor)
+        ])
+        
+
     }
 }
+
+//폰트 수정하기, 가로 스크롤 수정하기, pop

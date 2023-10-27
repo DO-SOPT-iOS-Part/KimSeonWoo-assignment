@@ -6,6 +6,14 @@ class WheatherDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 폰트 체크 하기
+                UIFont.familyNames.sorted().forEach { familyName in
+                    print("*** \(familyName) ***")
+                    UIFont.fontNames(forFamilyName: familyName).forEach { fontName in
+                        print("\(fontName)")
+                    }
+                    print("——————————")
+                }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -33,4 +41,13 @@ extension WheatherDetailViewController {
         backgroundImageView.frame = view.bounds
         view.insertSubview(backgroundImageView, at: 0)
     }
+}
+
+extension WheatherDetailViewController: BottomAppBarDelegate {
+
+    func listButtonPressed(_ BottomAppBar: BottomAppBar) {
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.popViewController(animated: true)
+    }
+
 }

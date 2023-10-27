@@ -11,27 +11,27 @@ class WheatherListViewController: UIViewController {
     private let homeView = WheatherListMain()
     private let moreButtonItem = UIBarButtonItem()
     private let locationSearchController = UISearchController()
-
     
-        override func viewDidLoad() {
-            super.viewDidLoad()
-        }
-        
-        override func viewWillAppear(_ animated: Bool) {
-            super.viewWillAppear(animated)
-            setNavigation()
-            setSearchController()
-        }
-        
-        override func loadView() {
-            self.view = homeView
-            setNavigation()
-            setSearchController()
-        }
-        
-        deinit {
-            print(#function)
-        }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setNavigation()
+        setSearchController()
+    }
+    
+    override func loadView() {
+        self.view = homeView
+        setNavigation()
+        setSearchController()
+    }
+    
+    deinit {
+        print(#function)
+    }
 }
 
 extension WheatherListViewController {
@@ -70,6 +70,16 @@ extension WheatherListViewController {
         self.navigationController?.navigationBar.prefersLargeTitles = true
         // 라지 사이즈 타이틀이 보이는 것
     }
+    
 }
 
-
+extension WheatherListViewController: WeatherInfoViewDelegate {
+    
+    func weatherInfoViewTapped(_ cityListView: CityListView) {
+        let weatherDetailedInfoVC = WheatherDetailViewController()
+        
+        self.navigationController?.pushViewController(weatherDetailedInfoVC, animated: true)
+        self.navigationController?.isNavigationBarHidden = true
+        print("tap")
+    }
+}

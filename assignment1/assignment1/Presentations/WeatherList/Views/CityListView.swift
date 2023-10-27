@@ -71,6 +71,8 @@ class CityListView: UIView {
             maxtemperatureLabel.bottomAnchor.constraint(equalTo: weatherLabel.bottomAnchor),
             maxtemperatureLabel.trailingAnchor.constraint(equalTo: mintemperatureLabel.leadingAnchor, constant: -5)
         ])
+        
+        isUserInteractionEnabled = true
     }
     
     private func setStyle() {
@@ -87,4 +89,8 @@ class CityListView: UIView {
 //        locationLabel.text = "나의 위치"
         locationLabel.font = UIFont(name: "SF-Pro", size: 25)
     }
+    
+
+
 }
+    

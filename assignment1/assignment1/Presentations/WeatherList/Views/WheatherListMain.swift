@@ -11,6 +11,7 @@ final class WheatherListMain: UIView {
     private let scrollView = UIScrollView()
     private var contentView = UIView()
     private var weatherInfoStackView = UIStackView()
+    private var viewController = WheatherListViewController()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -89,7 +90,8 @@ extension WheatherListMain  {
         [seoulWeatherInfoView,seoulWeatherInfoView1,seoulWeatherInfoView2,seoulWeatherInfoView3,seoulWeatherInfoView4,seoulWeatherInfoView5,seoulWeatherInfoView6,seoulWeatherInfoView7].forEach() {
             $0.translatesAutoresizingMaskIntoConstraints = false
             ($0.heightAnchor.constraint(equalToConstant: 120)).isActive = true
-//            $0.delegate = self
+            $0.delegate = viewController
+            
             weatherInfoStackView.addArrangedSubview($0)
         }
     }
