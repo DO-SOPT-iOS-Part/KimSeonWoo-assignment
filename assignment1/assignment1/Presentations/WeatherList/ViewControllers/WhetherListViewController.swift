@@ -41,7 +41,7 @@ class WheatherListViewController: UIViewController {
         [homeView.seoulWeatherInfoView,homeView.seoulWeatherInfoView1,homeView.seoulWeatherInfoView2,homeView.seoulWeatherInfoView3,homeView.seoulWeatherInfoView4,homeView.seoulWeatherInfoView5,homeView.seoulWeatherInfoView6,homeView.seoulWeatherInfoView7].forEach{
             $0.addTarget(self, action: #selector(tapListView), for: .touchUpInside)
         }
-
+        
     }
     
     @objc func tapListView() {

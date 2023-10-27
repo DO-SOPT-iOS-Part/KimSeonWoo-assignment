@@ -86,13 +86,13 @@ class CityListView: UIButton {
         myLocationLabel.font = UIFont(name: "SFProDisplay-Regular", size: 25)
         
         
-//        locationLabel.text = "나의 위치"
+        //        locationLabel.text = "나의 위치"
         locationLabel.font = UIFont(name: "SFProDisplay-Regular", size: 17)
         temperatureLabel.font = UIFont(name: "SFProDisplay-Regular", size: 52)
     }
     
-
-
-
-}
     
+    
+    
+}
+

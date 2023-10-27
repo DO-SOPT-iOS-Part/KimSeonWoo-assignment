@@ -206,7 +206,7 @@ extension WheatherDetailMain {
             descriptionView.centerXAnchor.constraint(equalTo: centerXAnchor),
             descriptionView.heightAnchor.constraint(equalToConstant: 212),
             descriptionView.widthAnchor.constraint(equalToConstant: 345)
-                ])
+        ])
         
         // wheatherDescriptionLabel, lineView 제약 조건 설정
         NSLayoutConstraint.activate([
@@ -236,10 +236,10 @@ extension WheatherDetailMain {
             horizontalWeatherStackView.topAnchor.constraint(equalTo: horizontalScrollView.topAnchor),
             horizontalWeatherStackView.leadingAnchor.constraint(equalTo: horizontalScrollView.leadingAnchor),
             horizontalWeatherStackView.trailingAnchor.constraint(equalTo: horizontalScrollView.trailingAnchor)
-
+            
         ])
         
-
+        
     }
 }
 

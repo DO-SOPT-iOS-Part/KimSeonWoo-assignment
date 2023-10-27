@@ -30,7 +30,7 @@ final class WheatherListMain: UIView {
     let seoulWeatherInfoView5 = CityListView(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "27°", minTemperature: "23°")
     let seoulWeatherInfoView6 = CityListView(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "27°", minTemperature: "23°")
     let seoulWeatherInfoView7 = CityListView(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "27°", minTemperature: "23°")
-
+    
 }
 
 extension WheatherListMain  {
@@ -68,7 +68,7 @@ extension WheatherListMain  {
             weatherInfoStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
-
+    
     
     private func setStyle() {
         [scrollView].forEach{

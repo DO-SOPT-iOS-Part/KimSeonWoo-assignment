@@ -3,7 +3,7 @@ import UIKit
 class WheatherDetailViewController: UIViewController {
     private let weatherDetailView = WheatherDetailMain()
     private let backgroundImageView = UIImageView(image: UIImage(named: "background"))
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // 폰트 체크 하기
@@ -16,11 +16,11 @@ class WheatherDetailViewController: UIViewController {
         }
         addTarget()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
-
+    
     override func loadView() {
         view = weatherDetailView
     }
@@ -30,7 +30,7 @@ class WheatherDetailViewController: UIViewController {
         
         setBackgroundImage()
     }
-
+    
     deinit {
         print(#function)
     }
@@ -38,7 +38,7 @@ class WheatherDetailViewController: UIViewController {
     private func addTarget() {
         weatherDetailView.bottomBar.listButton.addTarget(self, action: #selector(tapListView), for: .touchUpInside)
     }
-
+    
     @objc func tapListView() {
         print("taptaptap")
         self.navigationController?.popViewController(animated: true)
