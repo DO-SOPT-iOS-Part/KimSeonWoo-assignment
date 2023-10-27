@@ -11,23 +11,23 @@ import UIKit
 
 class WheatherDetailListView: UIView {
     
-    private let timeLabel: UILabel = {
+    let timeLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.font = UIFont(name: "STIXTwoText", size: 17)
+        label.font = UIFont(name: "SFProDisplay-Regular", size: 17)
         return label
     }()
     
-    private let weatherImageView: UIImageView = {
+    let weatherImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
-    private let temperatureLabel: UILabel = {
+    let temperatureLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.font = UIFont(name: "STIXTwoText", size: 19)
+        label.font = UIFont(name: "SFProDisplay-Regular", size: 19)
         return label
     }()
     

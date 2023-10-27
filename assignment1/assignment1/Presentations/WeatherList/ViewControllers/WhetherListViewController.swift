@@ -15,6 +15,15 @@ class WheatherListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 폰트 체크 하기
+        UIFont.familyNames.sorted().forEach { familyName in
+            print("*** \(familyName) ***")
+            UIFont.fontNames(forFamilyName: familyName).forEach { fontName in
+                print("\(fontName)")
+            }
+            print("——————————")
+        }
+        self.addTarget()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -27,6 +36,16 @@ class WheatherListViewController: UIViewController {
         self.view = homeView
         setNavigation()
         setSearchController()
+    }
+    private func addTarget() {
+        homeView.seoulWeatherInfoView1.addTarget(self, action: #selector(tapListView), for: .touchUpInside)
+    }
+    
+    @objc func tapListView() {
+        let weatherDetailViewController = WheatherDetailViewController()
+        
+        self.navigationController?.pushViewController(weatherDetailViewController, animated: true)
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     deinit {
@@ -71,15 +90,6 @@ extension WheatherListViewController {
         // 라지 사이즈 타이틀이 보이는 것
     }
     
-}
-
-extension WheatherListViewController: WeatherInfoViewDelegate {
     
-    func weatherInfoViewTapped(_ cityListView: CityListView) {
-        let weatherDetailedInfoVC = WheatherDetailViewController()
-        
-        self.navigationController?.pushViewController(weatherDetailedInfoVC, animated: true)
-        self.navigationController?.isNavigationBarHidden = true
-        print("tap")
-    }
+    
 }

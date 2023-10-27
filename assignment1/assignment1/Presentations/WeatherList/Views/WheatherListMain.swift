@@ -11,7 +11,6 @@ final class WheatherListMain: UIView {
     private let scrollView = UIScrollView()
     private var contentView = UIView()
     private var weatherInfoStackView = UIStackView()
-    private var viewController = WheatherListViewController()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,6 +21,15 @@ final class WheatherListMain: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    let seoulWeatherInfoView = CityListView(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "27°", minTemperature: "23°")
+    let seoulWeatherInfoView1 = CityListView(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "27°", minTemperature: "23°")
+    let seoulWeatherInfoView2 = CityListView(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "27°", minTemperature: "23°")
+    let seoulWeatherInfoView3 = CityListView(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "27°", minTemperature: "23°")
+    let seoulWeatherInfoView4 = CityListView(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "27°", minTemperature: "23°")
+    let seoulWeatherInfoView5 = CityListView(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "27°", minTemperature: "23°")
+    let seoulWeatherInfoView6 = CityListView(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "27°", minTemperature: "23°")
+    let seoulWeatherInfoView7 = CityListView(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "27°", minTemperature: "23°")
 
 }
 
@@ -78,19 +86,10 @@ extension WheatherListMain  {
             contentView.addSubview($0)
         }
         
-        let seoulWeatherInfoView = CityListView(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "27°", minTemperature: "23°")
-        let seoulWeatherInfoView1 = CityListView(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "27°", minTemperature: "23°")
-        let seoulWeatherInfoView2 = CityListView(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "27°", minTemperature: "23°")
-        let seoulWeatherInfoView3 = CityListView(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "27°", minTemperature: "23°")
-        let seoulWeatherInfoView4 = CityListView(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "27°", minTemperature: "23°")
-        let seoulWeatherInfoView5 = CityListView(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "27°", minTemperature: "23°")
-        let seoulWeatherInfoView6 = CityListView(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "27°", minTemperature: "23°")
-        let seoulWeatherInfoView7 = CityListView(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "27°", minTemperature: "23°")
         
         [seoulWeatherInfoView,seoulWeatherInfoView1,seoulWeatherInfoView2,seoulWeatherInfoView3,seoulWeatherInfoView4,seoulWeatherInfoView5,seoulWeatherInfoView6,seoulWeatherInfoView7].forEach() {
             $0.translatesAutoresizingMaskIntoConstraints = false
             ($0.heightAnchor.constraint(equalToConstant: 120)).isActive = true
-            $0.delegate = viewController
             
             weatherInfoStackView.addArrangedSubview($0)
         }

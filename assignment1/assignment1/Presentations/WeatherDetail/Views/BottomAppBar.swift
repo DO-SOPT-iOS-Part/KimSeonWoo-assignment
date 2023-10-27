@@ -16,7 +16,11 @@ class BottomAppBar: UIView {
     private let lineView = UIView()
     private let mapButton = UIButton()
     private let pageControl = UIPageControl()
-    private let listButton = UIButton()
+    let listButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "menuIcon"), for: .normal)
+        return button
+    } ()
     
     init() {
         super.init(frame: .zero)
@@ -71,14 +75,6 @@ class BottomAppBar: UIView {
             $0.numberOfPages = 2
             $0.setIndicatorImage(UIImage(named: "paperAirplaneIcon"), forPage: 0)
         }
-        [listButton].forEach {
-            $0.setImage(UIImage(named: "menuIcon"), for: .normal)
-            $0.addTarget(BottomAppBar.self, action: #selector(listButtonPressed(_:)), for: .touchUpInside)
-        }
         
-    }
-    
-    @objc private func listButtonPressed(_: UIButton) {
-        delegate?.listButtonPressed(self)
     }
 }

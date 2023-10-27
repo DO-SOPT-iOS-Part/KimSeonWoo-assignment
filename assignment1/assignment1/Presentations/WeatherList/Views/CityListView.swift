@@ -1,6 +1,6 @@
 import UIKit
 
-class CityListView: UIView {
+class CityListView: UIButton {
     
     weak var delegate: WeatherInfoViewDelegate?
     
@@ -83,13 +83,15 @@ class CityListView: UIView {
         }
         
         myLocationLabel.text = "나의 위치"
-        myLocationLabel.font = UIFont(name: "SF-Pro", size: 25)
+        myLocationLabel.font = UIFont(name: "SFProDisplay-Regular", size: 25)
         
         
 //        locationLabel.text = "나의 위치"
-        locationLabel.font = UIFont(name: "SF-Pro", size: 25)
+        locationLabel.font = UIFont(name: "SFProDisplay-Regular", size: 17)
+        temperatureLabel.font = UIFont(name: "SFProDisplay-Regular", size: 52)
     }
     
+
 
 
 }

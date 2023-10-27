@@ -7,13 +7,14 @@ class WheatherDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // 폰트 체크 하기
-                UIFont.familyNames.sorted().forEach { familyName in
-                    print("*** \(familyName) ***")
-                    UIFont.fontNames(forFamilyName: familyName).forEach { fontName in
-                        print("\(fontName)")
-                    }
-                    print("——————————")
-                }
+        UIFont.familyNames.sorted().forEach { familyName in
+            print("*** \(familyName) ***")
+            UIFont.fontNames(forFamilyName: familyName).forEach { fontName in
+                print("\(fontName)")
+            }
+            print("——————————")
+        }
+        addTarget()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -33,6 +34,15 @@ class WheatherDetailViewController: UIViewController {
     deinit {
         print(#function)
     }
+    
+    private func addTarget() {
+        weatherDetailView.bottomBar.listButton.addTarget(self, action: #selector(tapListView), for: .touchUpInside)
+    }
+
+    @objc func tapListView() {
+        print("taptaptap")
+        self.navigationController?.popViewController(animated: true)
+    }
 }
 
 extension WheatherDetailViewController {
@@ -43,11 +53,3 @@ extension WheatherDetailViewController {
     }
 }
 
-extension WheatherDetailViewController: BottomAppBarDelegate {
-
-    func listButtonPressed(_ BottomAppBar: BottomAppBar) {
-        self.navigationController?.isNavigationBarHidden = false
-        self.navigationController?.popViewController(animated: true)
-    }
-
-}
