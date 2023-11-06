@@ -1,64 +1,51 @@
 //
-//  ViewController.swift
+//  WheatherListViewController.swift
 //  assignment1
 //
-//  Created by Seonwoo Kim on 2023/10/15.
+//  Created by Seonwoo Kim on 2023/11/06.
 //
 
 import UIKit
+import SnapKit
+import Then
 
-class WheatherListViewController: UIViewController {
-    private let homeView = WheatherListMain()
+class WeatherListViewController: UIViewController {
+    
+    private let tableView = UITableView(frame: .zero, style: .plain).then {
+        $0.backgroundColor = .black
+    }
+    
     private let moreButtonItem = UIBarButtonItem()
     private let locationSearchController = UISearchController()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // 폰트 체크 하기
-        UIFont.familyNames.sorted().forEach { familyName in
-            print("*** \(familyName) ***")
-            UIFont.fontNames(forFamilyName: familyName).forEach { fontName in
-                print("\(fontName)")
-            }
-            print("——————————")
-        }
-        self.addTarget()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setNavigation()
         setSearchController()
-    }
-    
-    override func loadView() {
-        self.view = homeView
         setNavigation()
-        setSearchController()
+        setTableViewConfig()
+        setLayout()
     }
-    private func addTarget() {
-        [homeView.seoulWeatherInfoView,homeView.seoulWeatherInfoView1,homeView.seoulWeatherInfoView2,homeView.seoulWeatherInfoView3,homeView.seoulWeatherInfoView4,homeView.seoulWeatherInfoView5,homeView.seoulWeatherInfoView6,homeView.seoulWeatherInfoView7].forEach{
-            $0.addTarget(self, action: #selector(tapListView), for: .touchUpInside)
+    
+    private func reload() {
+        self.tableView.reloadData()
+    }
+    
+    private func setLayout() {
+        self.view.addSubview(tableView)
+        tableView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
-        
     }
     
-    @objc func tapListView() {
-        let weatherDetailViewController = WheatherDetailViewController()
-        
-        self.navigationController?.pushViewController(weatherDetailViewController, animated: true)
-        self.navigationController?.isNavigationBarHidden = true
+    private func setTableViewConfig() {
+        self.tableView.register(WetherListTableViewCell.self,
+                                forCellReuseIdentifier: WetherListTableViewCell.identifier)
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
     }
     
-    deinit {
-        print(#function)
-    }
-}
-
-extension WheatherListViewController {
     private func setSearchController() {
-        [locationSearchController].forEach{
+        let locationSearchController = UISearchController().then {
             $0.searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: "도시 또는 공항 검색", attributes: [NSAttributedString.Key.foregroundColor : #colorLiteral(red: 0.6178889275, green: 0.6178889275, blue: 0.6178889275, alpha: 1)])
             $0.searchBar.searchTextField.backgroundColor = #colorLiteral(red: 0.1353607476, green: 0.1353607476, blue: 0.1353607476, alpha: 1)
             $0.searchBar.searchTextField.textColor = .white
@@ -74,7 +61,7 @@ extension WheatherListViewController {
     }
     
     private func setNavigation() {
-        [moreButtonItem].forEach {
+        let moreButtonItem = UIBarButtonItem().then {
             $0.isHidden = false
             $0.image = UIImage(named: "moreIcon")
             $0.tintColor = .white
@@ -92,7 +79,19 @@ extension WheatherListViewController {
         self.navigationController?.navigationBar.prefersLargeTitles = true
         // 라지 사이즈 타이틀이 보이는 것
     }
+}
+
+extension WeatherListViewController: UITableViewDelegate {}
+extension WeatherListViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return weatherListViewData.count
+    }
     
-    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: WetherListTableViewCell.identifier,
+                                                       for: indexPath) as? WetherListTableViewCell else {return UITableViewCell()}
+        cell.bindData(data: weatherListViewData[indexPath.row])
+        return cell
+    }
     
 }

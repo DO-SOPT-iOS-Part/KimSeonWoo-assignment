@@ -9,9 +9,6 @@
 
 import Foundation
 
-protocol WeatherInfoViewDelegate: AnyObject {
-    func weatherInfoViewTapped(_ cityListView: CityListView)
-}
 
 protocol BottomAppBarDelegate: AnyObject {
     func listButtonPressed(_ BottomAppBar: BottomAppBar)
