@@ -55,7 +55,7 @@ class WeatherDetailViewController: UIViewController {
     }
     
     private let descriptionView = UIView().then {
-        $0.backgroundColor = .white.withAlphaComponent(0.03)
+        $0.backgroundColor = UIColor(red: 0.18, green: 0.20, blue: 0.25, alpha: 0.25)
         $0.layer.borderColor = CGColor(red: 255, green: 255, blue: 255, alpha: 0.25)
         $0.layer.borderWidth = 1
         $0.layer.cornerRadius = 10
@@ -73,13 +73,13 @@ class WeatherDetailViewController: UIViewController {
     }
     
     private let horizontalCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()).then {
-        $0.backgroundColor = .white.withAlphaComponent(0.03)
+        $0.backgroundColor = UIColor(red: 0.18, green: 0.20, blue: 0.25, alpha: 0.25)
     }
     
     private var bottomBar = BottomAppBar()
     
     private let tenDaysWeatherView = UIView().then {
-        $0.backgroundColor = .white.withAlphaComponent(0.03)
+        $0.backgroundColor = UIColor(red: 0.18, green: 0.20, blue: 0.25, alpha: 0.25)
         $0.layer.borderColor = CGColor(red: 255, green: 255, blue: 255, alpha: 0.25)
         $0.layer.borderWidth = 1
         $0.layer.cornerRadius = 10
@@ -94,7 +94,7 @@ class WeatherDetailViewController: UIViewController {
         $0.font = UIFont(name: "SFProDisplay-Regular", size: 15)
     }
     private let tenDaysWeatherTableView = UITableView(frame: .zero, style: .plain).then {
-        $0.backgroundColor = .white.withAlphaComponent(0.03)
+        $0.backgroundColor = UIColor(red: 0.18, green: 0.20, blue: 0.25, alpha: 0.25)
         $0.isScrollEnabled = false
         $0.separatorStyle = .singleLine
         $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -186,19 +186,17 @@ extension WeatherDetailViewController {
             $0.top.equalTo(maxTempLabel.snp.bottom).offset(50)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(212)
-            $0.width.equalTo(355)
+            $0.width.equalTo(335)
         }
-        
         wheatherDescriptionLabel.snp.makeConstraints {
             $0.top.equalTo(descriptionView.snp.top).offset(15)
-            $0.leading.equalTo(descriptionView.snp.leading).inset(13)
-            $0.trailing.equalTo(descriptionView.snp.trailing).inset(-13)
-            $0.bottom.equalTo(lineView.snp.top).offset(-15)
+            $0.leading.equalTo(descriptionView.snp.leading).inset(10)
+            $0.trailing.equalTo(descriptionView.snp.trailing).inset(10)
         }
         lineView.snp.makeConstraints {
             $0.top.equalTo(wheatherDescriptionLabel.snp.bottom).offset(20)
             $0.leading.equalTo(descriptionView.snp.leading).inset(13)
-            $0.trailing.equalTo(descriptionView.snp.trailing).inset(-13)
+            $0.trailing.equalTo(descriptionView.snp.trailing).inset(13)
             $0.height.equalTo(0.3)
         }
         horizontalCollectionView.snp.makeConstraints {
@@ -211,7 +209,7 @@ extension WeatherDetailViewController {
             $0.top.equalTo(descriptionView.snp.bottom).offset(20)
             $0.bottom.equalToSuperview().inset(86)
             $0.height.equalTo(500)
-            $0.width.equalTo(355)
+            $0.width.equalTo(335)
             $0.centerX.equalToSuperview()
         }
         tenDaysImage.snp.makeConstraints {

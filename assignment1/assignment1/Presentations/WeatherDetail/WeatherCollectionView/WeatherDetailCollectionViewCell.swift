@@ -40,19 +40,19 @@ class WeatherDetailCollectionViewCell: UICollectionViewCell {
         self.addSubview(weatherImageView)
         self.addSubview(temperatureLabel)
         
-        timeLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.snp.top).offset(15)
-            make.centerX.equalTo(self)
+        timeLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(4)
+            $0.centerX.equalToSuperview()
         }
         
-        weatherImageView.snp.makeConstraints { make in
-            make.top.equalTo(timeLabel.snp.bottom).offset(15)
-            make.centerX.equalTo(timeLabel)
+        weatherImageView.snp.makeConstraints {
+            $0.top.equalTo(timeLabel.snp.bottom).offset(14)
+            $0.centerX.equalTo(timeLabel)
         }
         
-        temperatureLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(self.snp.bottom).offset(-15)
-            make.centerX.equalTo(timeLabel)
+        temperatureLabel.snp.makeConstraints {
+            $0.bottom.equalToSuperview().offset(4)
+            $0.centerX.equalTo(timeLabel)
         }
     }
     

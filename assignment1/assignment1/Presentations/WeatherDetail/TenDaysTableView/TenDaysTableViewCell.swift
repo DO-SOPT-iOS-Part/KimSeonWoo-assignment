@@ -14,21 +14,21 @@ class TenDaysTableViewCell: UITableViewCell {
     
     private let dateLabel = UILabel().then {
         $0.textColor = .white
-        $0.font = UIFont(name: "SFProDisplay-Regular", size: 20)
+        $0.font = UIFont(name: "SFProDisplay-Regular", size: 22)
     }
     
     private let weatherImage = UIImageView()
     
     private let minTempLabel = UILabel().then {
         $0.textColor = .white
-        $0.font = UIFont(name: "SFProDisplay-Regular", size: 20)
+        $0.font = UIFont(name: "SFProDisplay-Regular", size: 22)
     }
     
     private let degreeBarImage = UIImageView()
     
     private let maxTempLabel = UILabel().then {
         $0.textColor = .white
-        $0.font = UIFont(name: "SFProDisplay-Regular", size: 20)
+        $0.font = UIFont(name: "SFProDisplay-Regular", size: 22)
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -74,7 +74,7 @@ class TenDaysTableViewCell: UITableViewCell {
          maxTempLabel.snp.makeConstraints {
              $0.centerY.equalToSuperview()
              $0.top.equalToSuperview().inset(14)
-             $0.leading.equalTo(degreeBarImage.snp.trailing).offset(5)
+             $0.leading.equalTo(degreeBarImage.snp.trailing).offset(6)
          }
     }
     
