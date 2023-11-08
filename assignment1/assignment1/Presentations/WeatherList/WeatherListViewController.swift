@@ -52,12 +52,14 @@ class WeatherListViewController: UIViewController {
             $0.searchBar.tintColor = .white
             $0.searchBar.setValue("취소", forKey: "cancelButtonText")
             $0.hidesNavigationBarDuringPresentation = true
+            let textFieldInsideSearchBar = navigationItem.searchController?.searchBar.value(forKey: "searchField") as? UITextField
         }
         
         self.navigationItem.searchController = locationSearchController
         self.navigationItem.hidesSearchBarWhenScrolling = false
         self.locationSearchController.searchBar.searchTextField.textColor = .white
         self.locationSearchController.searchBar.searchTextField.leftView?.tintColor = #colorLiteral(red: 0.6178889275, green: 0.6178889275, blue: 0.6178889275, alpha: 1)
+        navigationItem.searchController?.searchResultsUpdater = self
     }
     
     private func setNavigation() {
@@ -91,21 +93,40 @@ class WeatherListViewController: UIViewController {
 extension WeatherListViewController: UITableViewDelegate {}
 extension WeatherListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return weatherListViewData.count
+        return isFiltering ? filteredLocationData.count : weatherListViewData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: WetherListTableViewCell.identifier,
-                                                       for: indexPath) as? WetherListTableViewCell else {return UITableViewCell()}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: WetherListTableViewCell.identifier, for: indexPath) as? WetherListTableViewCell else { return UITableViewCell() }
+        
+        let dataToDisplay = self.isFiltering ? filteredLocationData[indexPath.row] : weatherListViewData[indexPath.row]
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapListView))
         cell.addGestureRecognizer(tapGesture)
-        //선택 되었을 때 배경색이 바뀌는 것을 방지하기 위한 코드
+        // 선택 되었을 때 배경색이 바뀌는 것을 방지하기 위한 코드
         let background = UIView()
         background.backgroundColor = .clear
         cell.selectedBackgroundView = background
-        cell.bindData(data: weatherListViewData[indexPath.row])
+        cell.bindData(data: dataToDisplay) // 데이터 원본 대신 필터링된 데이터를 전달
         return cell
     }
+}
+
+
+var filteredLocationData = [WeatherListViewData]()
+
+extension WeatherListViewController: UISearchResultsUpdating {
+    var isFiltering: Bool {
+        let searchController = self.navigationItem.searchController
+        let isActive = searchController?.isActive ?? false
+        let isSearchBarHasText = searchController?.searchBar.text?.isEmpty == false
+        
+        return isActive && isSearchBarHasText
+    }
     
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text else { return }
+        filteredLocationData = weatherListViewData.filter { return $0.location.lowercased().contains(text.lowercased()) }
+        self.tableView.reloadData()
+    }
 }

@@ -25,11 +25,11 @@ struct WeatherListViewData {
 }
 
 var weatherListViewData: [WeatherListViewData] = [
-    .init(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "최고:27°", minTemperature: "최저:23°"),
-    .init(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "최고:27°", minTemperature: "최저:23°"),
-    .init(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "최고:27°", minTemperature: "최저:23°"),
-    .init(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "최고:27°", minTemperature: "최저:23°"),
-    .init(location: "서울", weather: "흐림", temperature: "25°", maxTemperature: "최고:27°", minTemperature: "최저:23°"),
+    .init(location: "Seoul", weather: "흐림", temperature: "25°", maxTemperature: "최고:27°", minTemperature: "최저:23°"),
+    .init(location: "Sydney", weather: "흐림", temperature: "25°", maxTemperature: "최고:27°", minTemperature: "최저:23°"),
+    .init(location: "Incheon", weather: "흐림", temperature: "25°", maxTemperature: "최고:27°", minTemperature: "최저:23°"),
+    .init(location: "Tokyo", weather: "흐림", temperature: "25°", maxTemperature: "최고:27°", minTemperature: "최저:23°"),
+    .init(location: "Texas", weather: "흐림", temperature: "25°", maxTemperature: "최고:27°", minTemperature: "최저:23°"),
 ]
 
 
