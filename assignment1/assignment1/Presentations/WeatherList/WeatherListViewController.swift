@@ -79,6 +79,13 @@ class WeatherListViewController: UIViewController {
         self.navigationController?.navigationBar.prefersLargeTitles = true
         // 라지 사이즈 타이틀이 보이는 것
     }
+    
+    @objc func tapListView() {
+        let weatherDetailViewController = WeatherDetailViewController()
+        
+        self.navigationController?.pushViewController(weatherDetailViewController, animated: true)
+        self.navigationController?.isNavigationBarHidden = true
+    }
 }
 
 extension WeatherListViewController: UITableViewDelegate {}
@@ -90,6 +97,9 @@ extension WeatherListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: WetherListTableViewCell.identifier,
                                                        for: indexPath) as? WetherListTableViewCell else {return UITableViewCell()}
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapListView))
+         cell.addGestureRecognizer(tapGesture)
         cell.bindData(data: weatherListViewData[indexPath.row])
         return cell
     }

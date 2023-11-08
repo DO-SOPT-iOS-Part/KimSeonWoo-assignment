@@ -10,6 +10,6 @@
 import Foundation
 
 
-protocol BottomAppBarDelegate: AnyObject {
-    func listButtonPressed(_ BottomAppBar: BottomAppBar)
-}
+//protocol BottomAppBarDelegate: AnyObject {
+//    func listButtonPressed(_ BottomAppBar: BottomAppBar)
+//}

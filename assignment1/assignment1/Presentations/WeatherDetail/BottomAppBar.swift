@@ -8,19 +8,20 @@
 import Foundation
 
 import UIKit
+import SnapKit
+import Then
 
 class BottomAppBar: UIView {
     
-    weak var delegate: BottomAppBarDelegate?
+//    weak var delegate: BottomAppBarDelegate?
     
     private let lineView = UIView()
     private let mapButton = UIButton()
     private let pageControl = UIPageControl()
-    let listButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "menuIcon"), for: .normal)
-        return button
-    } ()
+    var listButton = UIButton().then {
+        $0.setImage(UIImage(named: "menuIcon"), for: .normal)
+        $0.addTarget(self, action: #selector(WeatherDetailViewController.listButtonTapped), for: .touchUpInside)
+    }
     
     init() {
         super.init(frame: .zero)
@@ -76,5 +77,16 @@ class BottomAppBar: UIView {
             $0.setIndicatorImage(UIImage(named: "paperAirplaneIcon"), forPage: 0)
         }
         
+    }
+
+}
+
+extension WeatherDetailViewController {
+    @objc func listButtonTapped() {
+        // listButton이 눌렸을 때 실행할 코드를 작성
+        // 예를 들면 뷰 컨트롤러를 팝하거나 다른 화면으로 이동하는 등의 작업
+        print("listButton이 눌렸습니다.")
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.popViewController(animated: true)
     }
 }
