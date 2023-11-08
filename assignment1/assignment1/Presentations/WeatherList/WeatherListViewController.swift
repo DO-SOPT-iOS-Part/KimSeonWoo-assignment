@@ -99,7 +99,11 @@ extension WeatherListViewController: UITableViewDataSource {
                                                        for: indexPath) as? WetherListTableViewCell else {return UITableViewCell()}
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapListView))
-         cell.addGestureRecognizer(tapGesture)
+        cell.addGestureRecognizer(tapGesture)
+        //선택 되었을 때 배경색이 바뀌는 것을 방지하기 위한 코드
+        let background = UIView()
+        background.backgroundColor = .clear
+        cell.selectedBackgroundView = background
         cell.bindData(data: weatherListViewData[indexPath.row])
         return cell
     }

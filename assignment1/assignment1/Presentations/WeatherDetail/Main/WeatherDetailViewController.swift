@@ -94,7 +94,7 @@ class WeatherDetailViewController: UIViewController {
         $0.font = UIFont(name: "SFProDisplay-Regular", size: 15)
     }
     private let tenDaysWeatherTableView = UITableView(frame: .zero, style: .plain).then {
-        $0.backgroundColor = .clear
+        $0.backgroundColor = .white.withAlphaComponent(0.03)
         $0.isScrollEnabled = false
         $0.separatorStyle = .singleLine
         $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -107,6 +107,7 @@ class WeatherDetailViewController: UIViewController {
         
         setCollectionViewConfig()
         setCollectionViewLayout()
+        setTableViewConfig()
         setUpUI()
     }
 }
@@ -133,13 +134,17 @@ extension WeatherDetailViewController {
         [backgroundImageView,bottomBar,verticalScrollView].forEach {
             self.view.addSubview($0)
         }
-        [tempLabel, cityLabel, wheatherStatusLabel, minTempLabel, maxTempLabel, descriptionView].forEach {
+        [tempLabel, cityLabel, wheatherStatusLabel, minTempLabel, maxTempLabel, descriptionView,tenDaysWeatherView].forEach {
             self.verticalScrollView.addSubview($0)
         }
         [wheatherDescriptionLabel, lineView, horizontalCollectionView].forEach {
             self.descriptionView.addSubview($0)
         }
-        
+        [tenDaysImage,
+         tenDaysWeatherLabel,
+         tenDaysWeatherTableView].forEach {
+            self.tenDaysWeatherView.addSubview($0)
+        }
         
         self.setLayout()
     }
@@ -202,6 +207,27 @@ extension WeatherDetailViewController {
             $0.leading.equalTo(descriptionView.snp.leading)
             $0.trailing.equalTo(descriptionView.snp.trailing)
         }
+        tenDaysWeatherView.snp.makeConstraints {
+            $0.top.equalTo(descriptionView.snp.bottom).offset(20)
+            $0.bottom.equalToSuperview().inset(86)
+            $0.height.equalTo(500)
+            $0.width.equalTo(355)
+            $0.centerX.equalToSuperview()
+        }
+        tenDaysImage.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(15)
+            $0.top.equalToSuperview().inset(10)
+            $0.size.equalTo(18)
+        }
+        tenDaysWeatherLabel.snp.makeConstraints {
+            $0.leading.equalTo(tenDaysImage.snp.trailing).offset(6)
+            $0.trailing.equalToSuperview().inset(15)
+            $0.top.equalToSuperview().inset(10)
+        }
+        tenDaysWeatherTableView.snp.makeConstraints {
+            $0.top.equalTo(tenDaysWeatherLabel.snp.bottom).offset(6)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
     }
     
     private func setCollectionViewConfig() {
@@ -209,6 +235,13 @@ extension WeatherDetailViewController {
                                                forCellWithReuseIdentifier: WeatherDetailCollectionViewCell.identifier)
         self.horizontalCollectionView.delegate = self
         self.horizontalCollectionView.dataSource = self
+    }
+    
+    private func setTableViewConfig() {
+        self.tenDaysWeatherTableView.register(TenDaysTableViewCell.self,
+                                              forCellReuseIdentifier: TenDaysTableViewCell.identifier)
+        self.tenDaysWeatherTableView.delegate = self
+        self.tenDaysWeatherTableView.dataSource = self
     }
     
     private func setCollectionViewLayout() {
@@ -219,4 +252,22 @@ extension WeatherDetailViewController {
         flowLayout.minimumInteritemSpacing = 3
         self.horizontalCollectionView.setCollectionViewLayout(flowLayout, animated: false)
     }
+}
+
+extension WeatherDetailViewController: UITableViewDelegate {}
+extension WeatherDetailViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tenDaysTableViewData.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TenDaysTableViewCell.identifier,
+                                                       for: indexPath) as? TenDaysTableViewCell else {return UITableViewCell()}
+        
+        cell.bindData(data: tenDaysTableViewData[indexPath.row])
+        cell.backgroundColor = .clear
+        cell.selectionStyle = .none
+        return cell
+    }
+    
 }
