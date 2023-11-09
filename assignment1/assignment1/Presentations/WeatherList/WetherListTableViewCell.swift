@@ -50,45 +50,45 @@ class WetherListTableViewCell: UITableViewCell {
     }
     
     private func setLayout() {
-            self.backgroundColor = .black
+        self.backgroundColor = .black
         
         self.isUserInteractionEnabled = true
-            
-            self.contentView.addSubview(backgroundImageView)
-            backgroundImageView.snp.makeConstraints{
-                $0.top.equalToSuperview().offset(10)
-                            $0.bottom.equalToSuperview().offset(-10)
-                            $0.leading.trailing.equalToSuperview().inset(20)
-            }
-            
-            [myLocationLabel, locationLabel, weatherLabel, temperatureLabel, maxtemperatureLabel, mintemperatureLabel].forEach {
-                self.backgroundImageView.addSubview($0)
-            }
-            myLocationLabel.snp.makeConstraints {
-                $0.top.equalToSuperview().inset(10)
-                $0.leading.equalToSuperview().inset(16)
-            }
-        locationLabel.snp.makeConstraints {
-                $0.top.equalToSuperview().inset(44)
-                $0.leading.equalToSuperview().inset(16)
-            }
-        weatherLabel.snp.makeConstraints {
-                $0.bottom.equalToSuperview().inset(10)
-                $0.leading.equalToSuperview().inset(16)
-            }
-        temperatureLabel.snp.makeConstraints {
-                $0.top.equalToSuperview().inset(4)
-                $0.leading.equalToSuperview().inset(249)
-            }
-        maxtemperatureLabel.snp.makeConstraints {
-                $0.bottom.equalToSuperview().inset(10)
-                $0.leading.equalToSuperview().inset(196)
-            }
-        mintemperatureLabel.snp.makeConstraints {
-                $0.bottom.equalToSuperview().inset(10)
-                $0.leading.equalToSuperview().inset(262)
-            }
+        
+        self.contentView.addSubview(backgroundImageView)
+        backgroundImageView.snp.makeConstraints{
+            $0.top.equalToSuperview().offset(10)
+            $0.bottom.equalToSuperview().offset(-10)
+            $0.leading.trailing.equalToSuperview().inset(20)
         }
+        
+        [myLocationLabel, locationLabel, weatherLabel, temperatureLabel, maxtemperatureLabel, mintemperatureLabel].forEach {
+            self.backgroundImageView.addSubview($0)
+        }
+        myLocationLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(10)
+            $0.leading.equalToSuperview().inset(16)
+        }
+        locationLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(44)
+            $0.leading.equalToSuperview().inset(16)
+        }
+        weatherLabel.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(10)
+            $0.leading.equalToSuperview().inset(16)
+        }
+        temperatureLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(4)
+            $0.leading.equalToSuperview().inset(249)
+        }
+        maxtemperatureLabel.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(10)
+            $0.leading.equalToSuperview().inset(196)
+        }
+        mintemperatureLabel.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(10)
+            $0.leading.equalToSuperview().inset(262)
+        }
+    }
     
     func bindData(data: WeatherListViewData) {
         self.locationLabel.text = data.location

@@ -58,8 +58,25 @@ class WeatherDetailCollectionViewCell: UICollectionViewCell {
     
     func bindData(data: WeatherCollectionViewData) {
         self.timeLabel.text = data.time
-        self.weatherImageView.image = UIImage(named: data.weather)
+        setWeatherImage(weather: data.weather)
         self.temperatureLabel.text = data.temperature
+    }
+    
+    private func setWeatherImage(weather: String) {
+        switch weather {
+        case "cloudBolt":
+            weatherImageView.image = UIImage(named: "cloudBolt")
+        case "cloudMoon":
+            weatherImageView.image = UIImage(named: "cloudMoon")
+        case "softRain":
+            weatherImageView.image = UIImage(named: "softRain")
+        case "heavyRain":
+            weatherImageView.image = UIImage(named: "heavyRain")
+        case "rainWithSun":
+            weatherImageView.image = UIImage(named: "rainWithSun")
+        default:
+            weatherImageView.image = UIImage(named: "cloudMoon")
+        }
     }
     
 }

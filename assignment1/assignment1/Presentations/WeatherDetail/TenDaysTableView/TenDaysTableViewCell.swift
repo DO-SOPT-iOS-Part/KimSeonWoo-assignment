@@ -65,24 +65,41 @@ class TenDaysTableViewCell: UITableViewCell {
             $0.centerY.equalToSuperview()
             $0.top.equalToSuperview().inset(14)
             $0.leading.equalTo(weatherImage.snp.trailing).offset(15)
-         }
+        }
         degreeBarImage.snp.makeConstraints {
-             $0.centerY.equalToSuperview()
-             $0.leading.equalTo(minTempLabel.snp.trailing).offset(6)
-             $0.width.equalTo(108)
-         }
-         maxTempLabel.snp.makeConstraints {
-             $0.centerY.equalToSuperview()
-             $0.top.equalToSuperview().inset(14)
-             $0.leading.equalTo(degreeBarImage.snp.trailing).offset(6)
-         }
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(minTempLabel.snp.trailing).offset(6)
+            $0.width.equalTo(108)
+        }
+        maxTempLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.top.equalToSuperview().inset(14)
+            $0.leading.equalTo(degreeBarImage.snp.trailing).offset(6)
+        }
     }
     
     func bindData(data: TenDaysTableViewData) {
-            self.weatherImage.image = UIImage(named: data.weatherImage)
-            self.dateLabel.text = data.date
-            self.minTempLabel.text = data.minTemp
-            self.maxTempLabel.text = data.maxTemp
+        setWeatherImage(weather: data.weatherImage)
+        self.dateLabel.text = data.date
+        self.minTempLabel.text = data.minTemp
+        self.maxTempLabel.text = data.maxTemp
         self.degreeBarImage.image = UIImage(named: data.degreeBar)
+    }
+    
+    private func setWeatherImage(weather: String) {
+        switch weather {
+        case "cloudBolt":
+            weatherImage.image = UIImage(named: "cloudBolt")
+        case "cloudMoon":
+            weatherImage.image = UIImage(named: "cloudMoon")
+        case "softRain":
+            weatherImage.image = UIImage(named: "softRain")
+        case "heavyRain":
+            weatherImage.image = UIImage(named: "heavyRain")
+        case "rainWithSun":
+            weatherImage.image = UIImage(named: "rainWithSun")
+        default:
+            weatherImage.image = UIImage(named: "cloudMoon")
+        }
     }
 }

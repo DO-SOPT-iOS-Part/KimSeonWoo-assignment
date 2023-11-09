@@ -13,7 +13,7 @@ import Then
 
 class BottomAppBar: UIView {
     
-//    weak var delegate: BottomAppBarDelegate?
+    //    weak var delegate: BottomAppBarDelegate?
     
     private let lineView = UIView()
     private let mapButton = UIButton()
@@ -78,7 +78,7 @@ class BottomAppBar: UIView {
         }
         
     }
-
+    
 }
 
 extension WeatherDetailViewController {
