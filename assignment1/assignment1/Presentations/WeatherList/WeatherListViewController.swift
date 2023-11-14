@@ -11,6 +11,12 @@ import Then
 
 class WeatherListViewController: UIViewController {
     
+    let locationArray: [String] = ["gongju", "gwangju", "gunsan", "daegu", "daejeon"]
+    var currentWeatherArray: [CurrentWeatherDataModel] = []
+    var resultArray: [CurrentWeatherDataModel] = []
+    
+    
+    
     private let tableView = UITableView(frame: .zero, style: .plain).then {
         $0.backgroundColor = .black
     }
@@ -24,6 +30,7 @@ class WeatherListViewController: UIViewController {
         setNavigation()
         setTableViewConfig()
         setLayout()
+        setCurrentWeatherData()
     }
     
     private func reload() {
@@ -81,6 +88,28 @@ class WeatherListViewController: UIViewController {
         self.navigationController?.navigationBar.prefersLargeTitles = true
         // 라지 사이즈 타이틀이 보이는 것
     }
+    // 날씨 데이터 Api 관련 부분
+    private func setCurrentWeatherData() {
+        Task {
+            do {
+                for city in locationArray {
+                    guard let response = try await GetCurrentWeatherService.shared.GetCurrentWeatherData(cityName: city) else { return }
+                    currentWeatherArray.append(response)
+                    Task {
+                        print(response)
+                        
+                        for weatherData in currentWeatherArray {
+                            if let firstWeather = weatherData.weather.first {
+                                weatherListViewData.append( .init(location: weatherData.name, weather: firstWeather.main, temperature: "\(weatherData.main.temp)", maxTemperature: "\(weatherData.main.tempMax)", minTemperature: "\(weatherData.main.tempMin)"))
+                            }
+                        }
+                    }
+                }
+            } catch {
+                print(error)
+            }
+        }
+    }
     
     @objc func tapListView() {
         let weatherDetailViewController = WeatherDetailViewController()
@@ -89,23 +118,14 @@ class WeatherListViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         
         
-        // 숨겨진 API 키 사용
-        if let path = Bundle.main.path(forResource: "Config", ofType: "plist"),
-            let xml = FileManager.default.contents(atPath: path),
-            let config = try? PropertyListSerialization.propertyList(from: xml, options: .mutableContainers, format: nil) as? [String: Any],
-            let apiKey = config["API_KEY"] as? String {
-            
-            print("API Key:", apiKey)
-        } else {
-            print("Error reading API Key from Config.plist")
-        }
+
     }
 }
 
 extension WeatherListViewController: UITableViewDelegate {}
 extension WeatherListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return isFiltering ? filteredLocationData.count : weatherListViewData.count
+        return isFiltering ? filteredLocationData.count : currentWeatherArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
