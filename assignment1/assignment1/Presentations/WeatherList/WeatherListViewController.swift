@@ -95,14 +95,9 @@ class WeatherListViewController: UIViewController {
                 for city in locationArray {
                     guard let response = try await GetCurrentWeatherService.shared.GetCurrentWeatherData(cityName: city) else { return }
                     currentWeatherArray.append(response)
+                    weatherListViewData.append( .init(location: response.name, weather: response.weather.first?.main ?? "", temperature: Int(response.main.temp), maxTemperature: Int(response.main.tempMax), minTemperature: Int(response.main.tempMin), lon: response.coord.lon,  lat: response.coord.lat))
                     Task {
                         print(response)
-                        
-                        for weatherData in currentWeatherArray {
-                            if let firstWeather = weatherData.weather.first {
-                                weatherListViewData.append( .init(location: weatherData.name, weather: firstWeather.main, temperature: "\(weatherData.main.temp)", maxTemperature: "\(weatherData.main.tempMax)", minTemperature: "\(weatherData.main.tempMin)"))
-                            }
-                        }
                     }
                 }
             } catch {
@@ -118,7 +113,7 @@ class WeatherListViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         
         
-
+        
     }
 }
 

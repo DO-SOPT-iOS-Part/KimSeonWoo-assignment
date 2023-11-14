@@ -93,8 +93,8 @@ class WetherListTableViewCell: UITableViewCell {
     func bindData(data: WeatherListViewData) {
         self.locationLabel.text = data.location
         self.weatherLabel.text = data.weather
-        self.temperatureLabel.text = data.temperature
-        self.maxtemperatureLabel.text = data.maxTemperature
-        self.mintemperatureLabel.text = data.minTemperature
+        self.temperatureLabel.text = String(data.temperature)
+        self.maxtemperatureLabel.text = String(data.maxTemperature)
+        self.mintemperatureLabel.text = String(data.minTemperature)
     }
 }
