@@ -87,6 +87,18 @@ class WeatherListViewController: UIViewController {
         
         self.navigationController?.pushViewController(weatherDetailViewController, animated: true)
         self.navigationController?.isNavigationBarHidden = true
+        
+        
+        // 숨겨진 API 키 사용
+        if let path = Bundle.main.path(forResource: "Config", ofType: "plist"),
+            let xml = FileManager.default.contents(atPath: path),
+            let config = try? PropertyListSerialization.propertyList(from: xml, options: .mutableContainers, format: nil) as? [String: Any],
+            let apiKey = config["API_KEY"] as? String {
+            
+            print("API Key:", apiKey)
+        } else {
+            print("Error reading API Key from Config.plist")
+        }
     }
 }
 
