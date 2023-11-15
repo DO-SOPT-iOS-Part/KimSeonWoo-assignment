@@ -16,7 +16,8 @@ class WeatherDetailViewController: UIViewController {
     var minTempLabelText: String?
     var maxTempLabelText: String?
     var iconText: String?
-
+    var descriptionText: String?
+    
     
     private let verticalScrollView = UIScrollView().then {
         $0.alwaysBounceVertical = true
@@ -70,7 +71,6 @@ class WeatherDetailViewController: UIViewController {
     
     private var wheatherDescriptionLabel = UILabel().then {
         $0.textColor = .white
-        $0.text = "08:00~09:00에 강우 상태가, 18:00에 한때 흐린 상태가 예상됩니다."
         $0.font = UIFont(name: "SFProDisplay-Regular", size: 18)
         $0.numberOfLines = 2
     }
@@ -153,12 +153,15 @@ extension WeatherDetailViewController {
             self.tenDaysWeatherView.addSubview($0)
         }
         
-//        가져온 데이터를 라벨에 할당
+        //        가져온 데이터를 라벨에 할당
         cityLabel.text = cityLabelText
         tempLabel.text = tempLabelText
         wheatherStatusLabel.text = wheatherStatusLabelText
         minTempLabel.text = minTempLabelText
         maxTempLabel.text = maxTempLabelText
+        wheatherDescriptionLabel.text = descriptionText
+        
+        print(descriptionText)
         
         
         

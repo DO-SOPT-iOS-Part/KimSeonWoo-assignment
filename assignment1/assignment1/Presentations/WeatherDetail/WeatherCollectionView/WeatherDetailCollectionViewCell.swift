@@ -19,6 +19,7 @@ class WeatherDetailCollectionViewCell: UICollectionViewCell {
     
     private var weatherImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
+        $0.tintColor = .white
     }
     
     private var temperatureLabel = UILabel().then {
@@ -63,7 +64,7 @@ class WeatherDetailCollectionViewCell: UICollectionViewCell {
     }
     
     private func setWeatherImage(weather: String) {
-        switch String(weather.prefix(2)) {
+        switch weather {
         case "01d":
             weatherImageView.image = UIImage(named: "01d")
         case "01n":

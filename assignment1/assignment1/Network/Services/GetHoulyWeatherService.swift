@@ -19,7 +19,7 @@ class GetHourlyWeatherService {
             fatalError("API_KEY not found in Config.plist")
         }
 
-        let url = URL(string: "https://api.openweathermap.org/data/2.5/forecast?lat=\(lat)&lon=\(lon)&units=metric&lang=en&appid=\(apiKey)")!
+        let url = URL(string: "https://api.openweathermap.org/data/2.5/forecast?lat=\(lat)&lon=\(lon)&units=metric&lang=kr&appid=\(apiKey)")!
         print("넘어온 유알엘은 : \(url)")
         var request = URLRequest(url: url)
         request.httpMethod = "GET"

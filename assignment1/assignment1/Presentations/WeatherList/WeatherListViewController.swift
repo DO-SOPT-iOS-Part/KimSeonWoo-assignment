@@ -106,7 +106,7 @@ class WeatherListViewController: UIViewController {
     func extractHour(from dateString: String) -> String? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-
+        
         if let date = dateFormatter.date(from: dateString) {
             let hourFormatter = DateFormatter()
             hourFormatter.dateFormat = "HH"
@@ -134,25 +134,29 @@ class WeatherListViewController: UIViewController {
             weatherDetailViewController.minTempLabelText = "최저: \(tappedCellData.minTemperature) °C"
             weatherDetailViewController.maxTempLabelText = "최고: \(tappedCellData.maxTemperature) °C"
             
+            // 푸시가 데이터가 바뀐 이후의 코드를 맨 마지막으로 이동
             Task {
                 do {
                     guard let response = try await GetHourlyWeatherService.shared.GetHourlyWeatherData(lon:Int(tappedCellData.lon) , lat: Int(tappedCellData.lat)) else { return }
+                    
                     for item in response.list {
                         hourlyWeatherArray.append(["time": extractHour(from: item.dtTxt), "weather": item.weather.first?.icon ?? "icon", "temp": Int(item.main.tempMin)])
                     }
+                    
+                    weatherDetailViewController.descriptionText = "\(extractHour(from: response.list[1].dtTxt) ?? "text")시에 \(response.list[1].weather.first?.description ?? "description")과, \(extractHour(from: response.list[2].dtTxt) ?? "text")시에 \(response.list[2].weather.first?.description ?? "description")가 예상됩니다."
+                    
+                    for data in hourlyWeatherArray {
+                        weatherCollectionViewData.append(WeatherCollectionViewData(time: data["time"] as? String ?? "", weather: data["weather"] as? String ?? "", temperature: data["temp"] as? Int ?? 0))
+                    }
+                    
+                    self.navigationController?.pushViewController(weatherDetailViewController, animated: true)
+                    self.navigationController?.isNavigationBarHidden = true
+                    print(hourlyWeatherArray)
                 } catch {
                     print(error)
                 }
             }
-            
-            for data in hourlyWeatherArray {
-                weatherCollectionViewData.append(WeatherCollectionViewData(time: data["time"] as? String ?? "", weather: data["weather"] as? String ?? "", temperature: data["temp"] as? Int ?? 0))
-
-            }
-            
-            self.navigationController?.pushViewController(weatherDetailViewController, animated: true)
-            self.navigationController?.isNavigationBarHidden = true }
-            print(hourlyWeatherArray)
+        }
     }
 }
 
