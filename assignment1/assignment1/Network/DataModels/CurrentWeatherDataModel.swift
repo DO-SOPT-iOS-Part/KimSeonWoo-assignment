@@ -68,3 +68,4 @@ struct CurrentWind: Codable {
     let deg: Int
     let gust: Double?
 }
+

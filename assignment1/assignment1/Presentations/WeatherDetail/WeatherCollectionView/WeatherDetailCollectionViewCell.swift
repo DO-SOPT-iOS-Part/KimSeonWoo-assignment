@@ -62,7 +62,7 @@ class WeatherDetailCollectionViewCell: UICollectionViewCell {
         setWeatherImage(weather: data.weather)
         self.temperatureLabel.text = String(data.temperature)
     }
-    
+//icon 값에 따른 이미지 부여
     private func setWeatherImage(weather: String) {
         switch weather {
         case "01d":

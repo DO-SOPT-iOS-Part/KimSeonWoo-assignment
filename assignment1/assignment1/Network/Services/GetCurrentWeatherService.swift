@@ -18,7 +18,6 @@ class GetCurrentWeatherService {
               let apiKey = config["API_KEY"] as? String else {
             fatalError("API_KEY not found in Config.plist")
         }
-
         let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=\(cityName)&units=metric&lang=kr&appid=\(apiKey)")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"

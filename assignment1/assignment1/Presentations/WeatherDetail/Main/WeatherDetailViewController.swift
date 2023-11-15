@@ -105,7 +105,6 @@ class WeatherDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setCollectionViewConfig()
         setCollectionViewLayout()
         setTableViewConfig()
@@ -123,7 +122,6 @@ extension WeatherDetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let item = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherDetailCollectionViewCell.identifier,
                                                             for: indexPath) as? WeatherDetailCollectionViewCell else {return UICollectionViewCell()}
-        
         item.bindData(data: weatherCollectionViewData[indexPath.row])
         return item
     }
@@ -131,7 +129,6 @@ extension WeatherDetailViewController: UICollectionViewDataSource {
 
 extension WeatherDetailViewController {
     private func setUpUI() {
-        
         [backgroundImageView,bottomBar,verticalScrollView].forEach {
             self.view.addSubview($0)
         }
@@ -146,15 +143,12 @@ extension WeatherDetailViewController {
          tenDaysWeatherTableView].forEach {
             self.tenDaysWeatherView.addSubview($0)
         }
-        
         //        가져온 데이터를 라벨에 할당
         cityLabel.text = cityLabelText
         tempLabel.text = tempLabelText
         wheatherStatusLabel.text = wheatherStatusLabelText
         minMaxTempLabel.text = minMaxTempLabelText
         wheatherDescriptionLabel.text = descriptionText
-        
-        
         
         self.setLayout()
     }
@@ -164,10 +158,12 @@ extension WeatherDetailViewController {
             $0.top.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(bottomBar.snp.top)
         }
+        
         bottomBar.snp.makeConstraints {
             $0.bottom.leading.trailing.equalToSuperview()
             $0.height.equalTo(80)
         }
+        
         backgroundImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
@@ -176,41 +172,49 @@ extension WeatherDetailViewController {
             $0.top.equalTo(verticalScrollView.snp.top).offset(34)
             $0.centerX.equalToSuperview()
         }
+        
         tempLabel.snp.makeConstraints {
             $0.top.equalTo(cityLabel.snp.bottom)
             $0.centerX.equalToSuperview()
         }
+        
         wheatherStatusLabel.snp.makeConstraints {
             $0.top.equalTo(tempLabel.snp.bottom).offset(5)
             $0.centerX.equalToSuperview()
         }
+        
         minMaxTempLabel.snp.makeConstraints {
             $0.top.equalTo(wheatherStatusLabel.snp.bottom).offset(11)
             $0.trailing.equalTo(tempLabel.snp.trailing)
         }
+        
         descriptionView.snp.makeConstraints {
             $0.top.equalTo(minMaxTempLabel.snp.bottom).offset(44)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(212)
             $0.width.equalTo(335)
         }
+        
         wheatherDescriptionLabel.snp.makeConstraints {
             $0.top.equalTo(descriptionView.snp.top).offset(10)
             $0.leading.equalTo(descriptionView.snp.leading).inset(15)
             $0.trailing.equalTo(descriptionView.snp.trailing).inset(15)
         }
+        
         lineView.snp.makeConstraints {
             $0.top.equalTo(wheatherDescriptionLabel.snp.bottom).offset(11)
             $0.leading.equalTo(descriptionView.snp.leading).inset(14)
             $0.trailing.equalTo(descriptionView.snp.trailing).inset(14)
             $0.height.equalTo(0.3)
         }
+        
         horizontalCollectionView.snp.makeConstraints {
             $0.top.equalTo(lineView.snp.bottom)
             $0.bottom.equalTo(descriptionView.snp.bottom)
             $0.leading.equalTo(descriptionView.snp.leading).inset(20)
             $0.trailing.equalTo(descriptionView.snp.trailing).inset(20)
         }
+        
         tenDaysWeatherView.snp.makeConstraints {
             $0.top.equalTo(descriptionView.snp.bottom).offset(20)
             $0.bottom.equalToSuperview().inset(86)
@@ -218,16 +222,19 @@ extension WeatherDetailViewController {
             $0.width.equalTo(335)
             $0.centerX.equalToSuperview()
         }
+        
         tenDaysImage.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(15)
             $0.top.equalToSuperview().inset(10)
             $0.size.equalTo(18)
         }
+        
         tenDaysWeatherLabel.snp.makeConstraints {
             $0.leading.equalTo(tenDaysImage.snp.trailing).offset(6)
             $0.trailing.equalToSuperview().inset(15)
             $0.top.equalToSuperview().inset(10)
         }
+        
         tenDaysWeatherTableView.snp.makeConstraints {
             $0.top.equalTo(tenDaysWeatherLabel.snp.bottom).offset(6)
             $0.leading.trailing.bottom.equalToSuperview()

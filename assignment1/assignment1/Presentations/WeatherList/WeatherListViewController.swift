@@ -14,16 +14,14 @@ class WeatherListViewController: UIViewController {
     let locationArray: [String] = ["gongju", "gwangju", "gunsan", "daegu", "daejeon"]
     var currentWeatherArray: [CurrentWeatherDataModel] = []
     var hourlyWeatherArray: Array<Dictionary<String, Any>> = []
-    
-    
+    var filteredLocationData = [WeatherListViewData]()
+    private let moreButtonItem = UIBarButtonItem()
+    private let locationSearchController = UISearchController()
     
     private let tableView = UITableView(frame: .zero, style: .plain).then {
         $0.backgroundColor = .black
     }
-    
-    private let moreButtonItem = UIBarButtonItem()
-    private let locationSearchController = UISearchController()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setSearchController()
@@ -88,22 +86,20 @@ class WeatherListViewController: UIViewController {
         self.navigationController?.navigationBar.prefersLargeTitles = true
         // 라지 사이즈 타이틀이 보이는 것
     }
-    // 날씨 최초 리스트뷰 데이터 Api 관련 부분
-    private func setCurrentWeatherData() {
-        Task {
-            do {
-                for city in locationArray {
-                    guard let response = try await GetCurrentWeatherService.shared.GetCurrentWeatherData(cityName: city) else { return }
-                    currentWeatherArray.append(response)
-                    weatherListViewData.append( .init(location: response.name, weather: response.weather.first?.description ?? "description", temperature: Int(response.main.temp), maxTemperature: Int(response.main.tempMax), minTemperature: Int(response.main.tempMin), lon: response.coord.lon,  lat: response.coord.lat))
-                }
-            } catch {
-                print(error)
-            }
-        }
+    
+    private func translateCityNameToKorean(name: String) -> String {
+        let translations: [String: String] = [
+            "Gongju": "공주",
+            "Gwangju": "광주",
+            "Gunsan": "군산",
+            "Daegu": "대구",
+            "Daejeon": "대전"
+        ]
+        return translations[name] ?? name
     }
+    
     //시간 데이터를 포맷팅하는 함수
-    func extractHour(from dateString: String) -> String? {
+    private func extractHour(from dateString: String) -> String? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
@@ -115,7 +111,22 @@ class WeatherListViewController: UIViewController {
             return nil
         }
     }
-        
+    // 날씨 최초 리스트뷰 데이터 Api 관련 부분
+    private func setCurrentWeatherData() {
+        Task {
+            do {
+                for city in locationArray {
+                    guard let response = try await GetCurrentWeatherService.shared.GetCurrentWeatherData(cityName: city) else { return }
+                    currentWeatherArray.append(response)
+                    weatherListViewData.append( .init(location: translateCityNameToKorean(name: response.name), weather: response.weather.first?.description ?? "description", temperature: Int(response.main.temp), maxTemperature: Int(response.main.tempMax), minTemperature: Int(response.main.tempMin), lon: response.coord.lon,  lat: response.coord.lat))
+                }
+                reload()
+            } catch {
+                print(error)
+            }
+        }
+    }
+
     @objc func tapListView(_ sender: UITapGestureRecognizer) {
         if let indexPath = tableView.indexPathForRow(at: sender.location(in: tableView)) {
             // 터치한 셀의 indexPath를 확인하고 데이터에 접근
@@ -145,7 +156,6 @@ class WeatherListViewController: UIViewController {
                     
                     self.navigationController?.pushViewController(weatherDetailViewController, animated: true)
                     self.navigationController?.isNavigationBarHidden = true
-                    print(hourlyWeatherArray)
                 } catch {
                     print(error)
                 }
@@ -164,7 +174,6 @@ extension WeatherListViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: WetherListTableViewCell.identifier, for: indexPath) as? WetherListTableViewCell else { return UITableViewCell() }
         
         let dataToDisplay = self.isFiltering ? filteredLocationData[indexPath.row] : weatherListViewData[indexPath.row]
-        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapListView))
         cell.addGestureRecognizer(tapGesture)
         // 선택 되었을 때 배경색이 바뀌는 것을 방지하기 위한 코드
@@ -175,9 +184,6 @@ extension WeatherListViewController: UITableViewDataSource {
         return cell
     }
 }
-
-
-var filteredLocationData = [WeatherListViewData]()
 
 extension WeatherListViewController: UISearchResultsUpdating {
     var isFiltering: Bool {

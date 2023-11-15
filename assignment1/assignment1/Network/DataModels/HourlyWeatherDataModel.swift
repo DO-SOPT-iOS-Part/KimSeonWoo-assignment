@@ -1,7 +1,6 @@
 // This file was generated from JSON Schema using quicktype, do not modify it directly.
 // To parse the JSON, add this file to your project and do:
 //
-//   let welcome = try? JSONDecoder().decode(Welcome.self, from: jsonData)
 
 import Foundation
 
@@ -97,26 +96,6 @@ struct Weather: Codable {
     let description: String
     let icon: String
 }
-//
-//enum Description: String, Codable {
-//    case brokenClouds = "broken clouds"
-//    case clearSky = "clear sky"
-//    case fewClouds = "few clouds"
-//    case lightRain = "light rain"
-//    case moderateRain = "moderate rain"
-//    case overcastClouds = "overcast clouds"
-//    case scatteredClouds = "scattered clouds"
-//    case lightSnow = "light snow"  // Add this case
-//}
-
-
-//enum MainEnum: String, Codable {
-//    case clear = "Clear"
-//    case clouds = "Clouds"
-//    case rain = "Rain"
-//    case snow = "Snow"  // Added part
-//}
-
 
 // MARK: - Wind
 struct Wind: Codable {

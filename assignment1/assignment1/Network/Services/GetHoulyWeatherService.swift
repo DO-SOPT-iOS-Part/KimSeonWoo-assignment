@@ -10,7 +10,7 @@ import Foundation
 class GetHourlyWeatherService {
     static let shared = GetHourlyWeatherService()
     private init() {}
-    
+
     func makeRequest(lon: Int, lat:Int) -> URLRequest {
         guard let path = Bundle.main.path(forResource: "Config", ofType: "plist"),
               let xml = FileManager.default.contents(atPath: path),
@@ -18,9 +18,8 @@ class GetHourlyWeatherService {
               let apiKey = config["API_KEY"] as? String else {
             fatalError("API_KEY not found in Config.plist")
         }
-
+        
         let url = URL(string: "https://api.openweathermap.org/data/2.5/forecast?lat=\(lat)&lon=\(lon)&units=metric&lang=kr&appid=\(apiKey)")!
-        print("넘어온 유알엘은 : \(url)")
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         let header = ["Content-Type": "application/json"]
@@ -29,7 +28,6 @@ class GetHourlyWeatherService {
         }
         return request
     }
-
     
     func GetHourlyWeatherData(lon: Int, lat:Int) async throws -> HourlyWelcome? {
         do {
