@@ -82,11 +82,11 @@ class WetherListTableViewCell: UITableViewCell {
         }
         maxtemperatureLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(10)
-            $0.leading.equalToSuperview().inset(196)
+            $0.leading.equalToSuperview().inset(205)
         }
         mintemperatureLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(10)
-            $0.leading.equalToSuperview().inset(262)
+            $0.leading.equalToSuperview().inset(272)
         }
     }
 //    현재시간을 반환하기 위한 함수입니다.
@@ -104,8 +104,8 @@ class WetherListTableViewCell: UITableViewCell {
         self.myLocationLabel.text = data.location
         self.timeLabel.text = getCurrentTime()
         self.weatherLabel.text = data.weather
-        self.temperatureLabel.text = String(data.temperature)
-        self.maxtemperatureLabel.text = String(data.maxTemperature)
-        self.mintemperatureLabel.text = String(data.minTemperature)
+        self.temperatureLabel.text = "\(data.temperature)°"
+        self.maxtemperatureLabel.text = "최고:\(data.maxTemperature)°"
+        self.mintemperatureLabel.text = "최저:\(data.minTemperature)°"
     }
 }

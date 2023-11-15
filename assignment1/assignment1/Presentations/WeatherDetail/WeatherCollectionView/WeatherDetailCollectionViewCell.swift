@@ -24,7 +24,7 @@ class WeatherDetailCollectionViewCell: UICollectionViewCell {
     
     private var temperatureLabel = UILabel().then {
         $0.textColor = .white
-        $0.font = UIFont(name: "SFProDisplay-Regular", size: 19)
+        $0.font = UIFont(name: "SFProDisplay-Regular", size: 22)
     }
     
     override init(frame: CGRect) {
@@ -42,7 +42,7 @@ class WeatherDetailCollectionViewCell: UICollectionViewCell {
         self.addSubview(temperatureLabel)
         
         timeLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(4)
+            $0.top.equalToSuperview().offset(14)
             $0.centerX.equalToSuperview()
         }
         
@@ -52,7 +52,7 @@ class WeatherDetailCollectionViewCell: UICollectionViewCell {
         }
         
         temperatureLabel.snp.makeConstraints {
-            $0.bottom.equalToSuperview().offset(4)
+            $0.bottom.equalToSuperview().offset(-10)
             $0.centerX.equalTo(timeLabel)
         }
     }

@@ -88,7 +88,7 @@ class WeatherListViewController: UIViewController {
         self.navigationController?.navigationBar.prefersLargeTitles = true
         // 라지 사이즈 타이틀이 보이는 것
     }
-    // 날씨 데이터 Api 관련 부분
+    // 날씨 최초 리스트뷰 데이터 Api 관련 부분
     private func setCurrentWeatherData() {
         Task {
             do {
@@ -115,12 +115,7 @@ class WeatherListViewController: UIViewController {
             return nil
         }
     }
-    
-    func convertFahrenheitToCelsius(fahrenheit: Double) -> Int {
-        let celsius = Int((fahrenheit - 32) * 5 / 9)
-        return celsius
-    }
-    
+        
     @objc func tapListView(_ sender: UITapGestureRecognizer) {
         if let indexPath = tableView.indexPathForRow(at: sender.location(in: tableView)) {
             // 터치한 셀의 indexPath를 확인하고 데이터에 접근
@@ -129,10 +124,9 @@ class WeatherListViewController: UIViewController {
             //WeatherDetailViewController 라벨 데이터를 전달
             let weatherDetailViewController = WeatherDetailViewController()
             weatherDetailViewController.cityLabelText = tappedCellData.location
-            weatherDetailViewController.tempLabelText = String(tappedCellData.temperature)
+            weatherDetailViewController.tempLabelText = "\(tappedCellData.temperature)°"
             weatherDetailViewController.wheatherStatusLabelText = tappedCellData.weather
-            weatherDetailViewController.minTempLabelText = "최저: \(tappedCellData.minTemperature) °C"
-            weatherDetailViewController.maxTempLabelText = "최고: \(tappedCellData.maxTemperature) °C"
+            weatherDetailViewController.minMaxTempLabelText = "최저:\(tappedCellData.minTemperature)°  최고:\(tappedCellData.maxTemperature)°"
             
             // 푸시가 데이터가 바뀐 이후의 코드를 맨 마지막으로 이동
             Task {
@@ -146,7 +140,7 @@ class WeatherListViewController: UIViewController {
                     weatherDetailViewController.descriptionText = "\(extractHour(from: response.list[1].dtTxt) ?? "text")시에 \(response.list[1].weather.first?.description ?? "description")과, \(extractHour(from: response.list[2].dtTxt) ?? "text")시에 \(response.list[2].weather.first?.description ?? "description")가 예상됩니다."
                     
                     for data in hourlyWeatherArray {
-                        weatherCollectionViewData.append(WeatherCollectionViewData(time: data["time"] as? String ?? "", weather: data["weather"] as? String ?? "", temperature: data["temp"] as? Int ?? 0))
+                        weatherCollectionViewData.append(WeatherCollectionViewData(time: "\(data["time"] as? String ?? "")시", weather: data["weather"] as? String ?? "", temperature: "\(data["temp"] as? Int ?? 0)°"))
                     }
                     
                     self.navigationController?.pushViewController(weatherDetailViewController, animated: true)

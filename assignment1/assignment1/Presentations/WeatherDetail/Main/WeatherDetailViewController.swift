@@ -13,8 +13,7 @@ class WeatherDetailViewController: UIViewController {
     var cityLabelText: String?
     var tempLabelText: String?
     var wheatherStatusLabelText: String?
-    var minTempLabelText: String?
-    var maxTempLabelText: String?
+    var minMaxTempLabelText: String?
     var iconText: String?
     var descriptionText: String?
     
@@ -32,7 +31,7 @@ class WeatherDetailViewController: UIViewController {
     private var cityLabel = UILabel().then {
         $0.textColor = .white
         $0.text = "도시"
-        $0.font = UIFont(name: "SFProDisplay-Regular", size: 36)
+        $0.font = UIFont(name: "SFProDisplay-Regular", size: 38)
         $0.textAlignment = .center
     }
     
@@ -46,26 +45,21 @@ class WeatherDetailViewController: UIViewController {
     private var wheatherStatusLabel = UILabel().then {
         $0.textColor = .white
         $0.text = "날씨 상태"
-        $0.font = UIFont(name: "SFProDisplay-Regular", size: 25)
+        $0.font = UIFont(name: "SFProDisplay-Regular", size: 24)
         $0.textAlignment = .center
     }
     
-    private var minTempLabel = UILabel().then {
+    private var minMaxTempLabel = UILabel().then {
         $0.textColor = .white
-        $0.text = "최저"
+        $0.text = "최저/최고"
         $0.font = UIFont(name: "SFProDisplay-Regular", size: 20)
     }
     
-    private var maxTempLabel = UILabel().then {
-        $0.textColor = .white
-        $0.text = "최고"
-        $0.font = UIFont(name: "SFProDisplay-Regular", size: 20)
-    }
     
     private let descriptionView = UIView().then {
-        $0.backgroundColor = UIColor(red: 0.18, green: 0.20, blue: 0.25, alpha: 0.25)
+        $0.backgroundColor = UIColor(red: 0.18, green: 0.20, blue: 0.25, alpha: 0.03)
         $0.layer.borderColor = CGColor(red: 255, green: 255, blue: 255, alpha: 0.25)
-        $0.layer.borderWidth = 1
+        $0.layer.borderWidth = 0.5
         $0.layer.cornerRadius = 10
     }
     
@@ -80,15 +74,15 @@ class WeatherDetailViewController: UIViewController {
     }
     
     private let horizontalCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()).then {
-        $0.backgroundColor = UIColor(red: 0.18, green: 0.20, blue: 0.25, alpha: 0.25)
+        $0.backgroundColor = UIColor(red: 0.18, green: 0.20, blue: 0.25, alpha: 0.03)
     }
     
     private var bottomBar = BottomAppBar()
     
     private let tenDaysWeatherView = UIView().then {
-        $0.backgroundColor = UIColor(red: 0.18, green: 0.20, blue: 0.25, alpha: 0.25)
+        $0.backgroundColor = UIColor(red: 0.18, green: 0.20, blue: 0.25, alpha: 0.03)
         $0.layer.borderColor = CGColor(red: 255, green: 255, blue: 255, alpha: 0.25)
-        $0.layer.borderWidth = 1
+        $0.layer.borderWidth = 0.5
         $0.layer.cornerRadius = 10
     }
     private let tenDaysImage = UIImageView().then {
@@ -101,7 +95,7 @@ class WeatherDetailViewController: UIViewController {
         $0.font = UIFont(name: "SFProDisplay-Regular", size: 15)
     }
     private let tenDaysWeatherTableView = UITableView(frame: .zero, style: .plain).then {
-        $0.backgroundColor = UIColor(red: 0.18, green: 0.20, blue: 0.25, alpha: 0.25)
+        $0.backgroundColor = UIColor(red: 0.18, green: 0.20, blue: 0.25, alpha: 0.03)
         $0.isScrollEnabled = false
         $0.separatorStyle = .singleLine
         $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -141,7 +135,7 @@ extension WeatherDetailViewController {
         [backgroundImageView,bottomBar,verticalScrollView].forEach {
             self.view.addSubview($0)
         }
-        [tempLabel, cityLabel, wheatherStatusLabel, minTempLabel, maxTempLabel, descriptionView,tenDaysWeatherView].forEach {
+        [tempLabel, cityLabel, wheatherStatusLabel, minMaxTempLabel, descriptionView,tenDaysWeatherView].forEach {
             self.verticalScrollView.addSubview($0)
         }
         [wheatherDescriptionLabel, lineView, horizontalCollectionView].forEach {
@@ -157,11 +151,8 @@ extension WeatherDetailViewController {
         cityLabel.text = cityLabelText
         tempLabel.text = tempLabelText
         wheatherStatusLabel.text = wheatherStatusLabelText
-        minTempLabel.text = minTempLabelText
-        maxTempLabel.text = maxTempLabelText
+        minMaxTempLabel.text = minMaxTempLabelText
         wheatherDescriptionLabel.text = descriptionText
-        
-        print(descriptionText)
         
         
         
@@ -182,47 +173,43 @@ extension WeatherDetailViewController {
         }
         
         cityLabel.snp.makeConstraints {
-            $0.top.equalTo(verticalScrollView.snp.top).offset(50)
+            $0.top.equalTo(verticalScrollView.snp.top).offset(34)
             $0.centerX.equalToSuperview()
         }
         tempLabel.snp.makeConstraints {
-            $0.top.equalTo(cityLabel.snp.bottom).offset(5)
+            $0.top.equalTo(cityLabel.snp.bottom)
             $0.centerX.equalToSuperview()
         }
         wheatherStatusLabel.snp.makeConstraints {
             $0.top.equalTo(tempLabel.snp.bottom).offset(5)
             $0.centerX.equalToSuperview()
         }
-        minTempLabel.snp.makeConstraints {
-            $0.top.equalTo(wheatherStatusLabel.snp.bottom).offset(3)
-            $0.leading.equalTo(tempLabel.snp.leading)
-        }
-        maxTempLabel.snp.makeConstraints {
-            $0.top.equalTo(wheatherStatusLabel.snp.bottom).offset(3)
+        minMaxTempLabel.snp.makeConstraints {
+            $0.top.equalTo(wheatherStatusLabel.snp.bottom).offset(11)
             $0.trailing.equalTo(tempLabel.snp.trailing)
         }
         descriptionView.snp.makeConstraints {
-            $0.top.equalTo(maxTempLabel.snp.bottom).offset(50)
+            $0.top.equalTo(minMaxTempLabel.snp.bottom).offset(44)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(212)
             $0.width.equalTo(335)
         }
         wheatherDescriptionLabel.snp.makeConstraints {
-            $0.top.equalTo(descriptionView.snp.top).offset(15)
-            $0.leading.equalTo(descriptionView.snp.leading).inset(10)
-            $0.trailing.equalTo(descriptionView.snp.trailing).inset(10)
+            $0.top.equalTo(descriptionView.snp.top).offset(10)
+            $0.leading.equalTo(descriptionView.snp.leading).inset(15)
+            $0.trailing.equalTo(descriptionView.snp.trailing).inset(15)
         }
         lineView.snp.makeConstraints {
-            $0.top.equalTo(wheatherDescriptionLabel.snp.bottom).offset(20)
-            $0.leading.equalTo(descriptionView.snp.leading).inset(13)
-            $0.trailing.equalTo(descriptionView.snp.trailing).inset(13)
+            $0.top.equalTo(wheatherDescriptionLabel.snp.bottom).offset(11)
+            $0.leading.equalTo(descriptionView.snp.leading).inset(14)
+            $0.trailing.equalTo(descriptionView.snp.trailing).inset(14)
             $0.height.equalTo(0.3)
         }
         horizontalCollectionView.snp.makeConstraints {
             $0.top.equalTo(lineView.snp.bottom)
             $0.bottom.equalTo(descriptionView.snp.bottom)
-            $0.leading.equalTo(descriptionView.snp.leading)
-            $0.trailing.equalTo(descriptionView.snp.trailing)
+            $0.leading.equalTo(descriptionView.snp.leading).inset(20)
+            $0.trailing.equalTo(descriptionView.snp.trailing).inset(20)
         }
         tenDaysWeatherView.snp.makeConstraints {
             $0.top.equalTo(descriptionView.snp.bottom).offset(20)

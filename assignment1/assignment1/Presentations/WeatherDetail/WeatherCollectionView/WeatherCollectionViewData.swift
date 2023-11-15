@@ -10,10 +10,10 @@ import Foundation
 struct WeatherCollectionViewData {
     let time: String
     let weather: String
-    let temperature: Int
+    let temperature: String
     
     
-    init(time: String, weather: String, temperature:Int) {
+    init(time: String, weather: String, temperature: String) {
         self.time = time
         self.weather = weather
         self.temperature = temperature
