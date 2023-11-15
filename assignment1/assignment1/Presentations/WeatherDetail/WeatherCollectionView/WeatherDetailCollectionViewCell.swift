@@ -59,7 +59,7 @@ class WeatherDetailCollectionViewCell: UICollectionViewCell {
     func bindData(data: WeatherCollectionViewData) {
         self.timeLabel.text = data.time
         setWeatherImage(weather: data.weather)
-        self.temperatureLabel.text = data.temperature
+        self.temperatureLabel.text = String(data.temperature)
     }
     
     private func setWeatherImage(weather: String) {

@@ -13,6 +13,7 @@ class WeatherListViewController: UIViewController {
     
     let locationArray: [String] = ["gongju", "gwangju", "gunsan", "daegu", "daejeon"]
     var currentWeatherArray: [CurrentWeatherDataModel] = []
+    var hourlyWeatherArray: Array<Dictionary<String, Any>> = []
     
     
     
@@ -104,13 +105,31 @@ class WeatherListViewController: UIViewController {
             }
         }
     }
+    //시간 데이터를 포맷팅하는 함수
+    func extractHour(from dateString: String) -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+
+        if let date = dateFormatter.date(from: dateString) {
+            let hourFormatter = DateFormatter()
+            hourFormatter.dateFormat = "HH"
+            return hourFormatter.string(from: date)
+        } else {
+            return nil
+        }
+    }
+    
+    func convertFahrenheitToCelsius(fahrenheit: Double) -> Int {
+        let celsius = Int((fahrenheit - 32) * 5 / 9)
+        return celsius
+    }
     
     @objc func tapListView(_ sender: UITapGestureRecognizer) {
         if let indexPath = tableView.indexPathForRow(at: sender.location(in: tableView)) {
             // 터치한 셀의 indexPath를 확인하고 데이터에 접근
             let tappedCellData = isFiltering ? filteredLocationData[indexPath.row] : weatherListViewData[indexPath.row]
             
-            // 나머지 처리를 수행하거나 다음 뷰 컨트롤러로 데이터를 전달할 수 있습니다.
+            //WeatherDetailViewController 라벨 데이터를 전달
             let weatherDetailViewController = WeatherDetailViewController()
             weatherDetailViewController.cityLabelText = tappedCellData.location
             weatherDetailViewController.tempLabelText = "\(tappedCellData.temperature) °C"
@@ -118,25 +137,26 @@ class WeatherListViewController: UIViewController {
             weatherDetailViewController.minTempLabelText = "\(tappedCellData.minTemperature) °C"
             weatherDetailViewController.maxTempLabelText = "\(tappedCellData.maxTemperature) °C"
             
-            print("----------")
-            print(Int(tappedCellData.lon), Int(tappedCellData.lat))
-            
             Task {
                 do {
                     guard let response = try await GetHourlyWeatherService.shared.GetHourlyWeatherData(lon:Int(tappedCellData.lon) , lat: Int(tappedCellData.lat)) else { return }
-                    print(response)
+                    for item in response.list {
+                        hourlyWeatherArray.append(["time": extractHour(from: item.dtTxt), "weather": item.weather[0].main, "temp": Int(item.main.tempMin)])
+                    }
                 } catch {
                     print(error)
                 }
             }
             
+            for data in hourlyWeatherArray {
+                weatherCollectionViewData.append(WeatherCollectionViewData(time: data["time"] as? String ?? "", weather: data["weather"] as? String ?? "", temperature: data["temp"] as? Int ?? 0))
+
+            }
+            
             self.navigationController?.pushViewController(weatherDetailViewController, animated: true)
             self.navigationController?.isNavigationBarHidden = true }
+            print(hourlyWeatherArray)
     }
-}
-
-private func setHourlyWeatherData(lon: Int, lat: Int) {
-    
 }
 
 extension WeatherListViewController: UITableViewDelegate {}

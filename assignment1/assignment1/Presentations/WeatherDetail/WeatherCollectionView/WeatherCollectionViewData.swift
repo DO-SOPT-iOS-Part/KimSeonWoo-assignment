@@ -10,25 +10,15 @@ import Foundation
 struct WeatherCollectionViewData {
     let time: String
     let weather: String
-    let temperature: String
+    let temperature: Int
     
     
-    init(time: String, weather: String, temperature: String) {
+    init(time: String, weather: String, temperature:Int) {
         self.time = time
         self.weather = weather
         self.temperature = temperature
     }
 }
 
-var weatherCollectionViewData: [WeatherCollectionViewData] = [.init(time: "12시", weather: "cloudBolt", temperature: "21°"),
-                                                              .init(time: "12시", weather: "cloudBolt", temperature: "21°"),
-                                                              .init(time: "12시", weather: "cloudBolt", temperature: "21°"),
-                                                              .init(time: "12시", weather: "cloudBolt", temperature: "21°"),
-                                                              .init(time: "12시", weather: "cloudBolt", temperature: "21°"),
-                                                              .init(time: "12시", weather: "cloudBolt", temperature: "21°"),
-                                                              .init(time: "12시", weather: "cloudBolt", temperature: "21°"),
-                                                              .init(time: "12시", weather: "cloudBolt", temperature: "21°"),
-                                                              .init(time: "12시", weather: "cloudBolt", temperature: "21°"),
-                                                              .init(time: "12시", weather: "cloudBolt", temperature: "21°"),
-                                                              .init(time: "12시", weather: "cloudBolt", temperature: "21°"),
+var weatherCollectionViewData: [WeatherCollectionViewData] = [
 ]

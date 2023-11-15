@@ -31,7 +31,5 @@ struct WeatherListViewData {
 var weatherListViewData: [WeatherListViewData] = [
 ]
 
-let weatherListViewController = WeatherListViewController()
-
 
 
