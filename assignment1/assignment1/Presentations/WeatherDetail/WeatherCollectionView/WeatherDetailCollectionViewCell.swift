@@ -63,19 +63,45 @@ class WeatherDetailCollectionViewCell: UICollectionViewCell {
     }
     
     private func setWeatherImage(weather: String) {
-        switch weather {
-        case "cloudBolt":
-            weatherImageView.image = UIImage(named: "cloudBolt")
-        case "cloudMoon":
-            weatherImageView.image = UIImage(named: "cloudMoon")
-        case "softRain":
-            weatherImageView.image = UIImage(named: "softRain")
-        case "heavyRain":
-            weatherImageView.image = UIImage(named: "heavyRain")
-        case "rainWithSun":
-            weatherImageView.image = UIImage(named: "rainWithSun")
+        switch String(weather.prefix(2)) {
+        case "01d":
+            weatherImageView.image = UIImage(named: "01d")
+        case "01n":
+            weatherImageView.image = UIImage(named: "01d")
+        case "02d":
+            weatherImageView.image = UIImage(named: "02d")
+        case "02n":
+            weatherImageView.image = UIImage(named: "02d")
+        case "03d":
+            weatherImageView.image = UIImage(named: "03d")
+        case "03n":
+            weatherImageView.image = UIImage(named: "03d")
+        case "04d":
+            weatherImageView.image = UIImage(named: "04d")
+        case "04n":
+            weatherImageView.image = UIImage(named: "04d")
+        case "09d":
+            weatherImageView.image = UIImage(named: "09d")
+        case "09n":
+            weatherImageView.image = UIImage(named: "09d")
+        case "10d":
+            weatherImageView.image = UIImage(named: "10d")
+        case "10n":
+            weatherImageView.image = UIImage(named: "10d")
+        case "11d":
+            weatherImageView.image = UIImage(named: "11d")
+        case "11n":
+            weatherImageView.image = UIImage(named: "11d")
+        case "13d":
+            weatherImageView.image = UIImage(named: "13d")
+        case "13n":
+            weatherImageView.image = UIImage(named: "13d")
+        case "50d":
+            weatherImageView.image = UIImage(named: "50d")
+        case "50n":
+            weatherImageView.image = UIImage(named: "50d")
         default:
-            weatherImageView.image = UIImage(named: "cloudMoon")
+            weatherImageView.image = UIImage(named: "03d")
         }
     }
     

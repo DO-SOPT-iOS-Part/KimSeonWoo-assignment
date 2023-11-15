@@ -95,10 +95,7 @@ class WeatherListViewController: UIViewController {
                 for city in locationArray {
                     guard let response = try await GetCurrentWeatherService.shared.GetCurrentWeatherData(cityName: city) else { return }
                     currentWeatherArray.append(response)
-                    weatherListViewData.append( .init(location: response.name, weather: response.weather.first?.main ?? "", temperature: Int(response.main.temp), maxTemperature: Int(response.main.tempMax), minTemperature: Int(response.main.tempMin), lon: response.coord.lon,  lat: response.coord.lat))
-                    Task {
-                        //                        print(response)
-                    }
+                    weatherListViewData.append( .init(location: response.name, weather: response.weather.first?.description ?? "description", temperature: Int(response.main.temp), maxTemperature: Int(response.main.tempMax), minTemperature: Int(response.main.tempMin), lon: response.coord.lon,  lat: response.coord.lat))
                 }
             } catch {
                 print(error)
@@ -132,16 +129,16 @@ class WeatherListViewController: UIViewController {
             //WeatherDetailViewController 라벨 데이터를 전달
             let weatherDetailViewController = WeatherDetailViewController()
             weatherDetailViewController.cityLabelText = tappedCellData.location
-            weatherDetailViewController.tempLabelText = "\(tappedCellData.temperature) °C"
+            weatherDetailViewController.tempLabelText = String(tappedCellData.temperature)
             weatherDetailViewController.wheatherStatusLabelText = tappedCellData.weather
-            weatherDetailViewController.minTempLabelText = "\(tappedCellData.minTemperature) °C"
-            weatherDetailViewController.maxTempLabelText = "\(tappedCellData.maxTemperature) °C"
+            weatherDetailViewController.minTempLabelText = "최저: \(tappedCellData.minTemperature) °C"
+            weatherDetailViewController.maxTempLabelText = "최고: \(tappedCellData.maxTemperature) °C"
             
             Task {
                 do {
                     guard let response = try await GetHourlyWeatherService.shared.GetHourlyWeatherData(lon:Int(tappedCellData.lon) , lat: Int(tappedCellData.lat)) else { return }
                     for item in response.list {
-                        hourlyWeatherArray.append(["time": extractHour(from: item.dtTxt), "weather": item.weather[0].main, "temp": Int(item.main.tempMin)])
+                        hourlyWeatherArray.append(["time": extractHour(from: item.dtTxt), "weather": item.weather.first?.icon ?? "icon", "temp": Int(item.main.tempMin)])
                     }
                 } catch {
                     print(error)

@@ -15,6 +15,7 @@ class WeatherDetailViewController: UIViewController {
     var wheatherStatusLabelText: String?
     var minTempLabelText: String?
     var maxTempLabelText: String?
+    var iconText: String?
 
     
     private let verticalScrollView = UIScrollView().then {
