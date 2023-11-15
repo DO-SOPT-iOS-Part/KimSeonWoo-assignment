@@ -8,27 +8,27 @@ import Foundation
 
 // MARK: - WeatherResponseDTO
 struct CurrentWeatherDataModel: Codable {
-    let coord: Coord
+    let coord: CurrentCoord
     let weather: [Weathers]
     let base: String
     let main: Main
     let visibility: Int
-    let wind: Wind
-    let clouds: Clouds
+    let wind: CurrentWind
+    let clouds: CurrentClouds
     let dt: Int
-    let sys: Sys
+    let sys: CurrentSys
     let timezone, id: Int
     let name: String
     let cod: Int
 }
 
 // MARK: - Clouds
-struct Clouds: Codable {
+struct CurrentClouds: Codable {
     let all: Int
 }
 
 // MARK: - Coord
-struct Coord: Codable {
+struct CurrentCoord: Codable {
     let lon, lat: Double
 }
 
@@ -50,7 +50,7 @@ struct Main: Codable {
 }
 
 // MARK: - Sys
-struct Sys: Codable {
+struct CurrentSys: Codable {
     let type, id: Int?
     let country: String
     let sunrise, sunset: Int
@@ -63,7 +63,7 @@ struct Weathers: Codable {
 }
 
 // MARK: - Wind
-struct Wind: Codable {
+struct CurrentWind: Codable {
     let speed: Double
     let deg: Int
     let gust: Double?

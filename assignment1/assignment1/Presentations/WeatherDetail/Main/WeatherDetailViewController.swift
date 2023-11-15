@@ -10,6 +10,12 @@ import SnapKit
 import Then
 
 class WeatherDetailViewController: UIViewController {
+    var cityLabelText: String?
+    var tempLabelText: String?
+    var wheatherStatusLabelText: String?
+    var minTempLabelText: String?
+    var maxTempLabelText: String?
+
     
     private let verticalScrollView = UIScrollView().then {
         $0.alwaysBounceVertical = true
@@ -23,34 +29,34 @@ class WeatherDetailViewController: UIViewController {
     
     private var cityLabel = UILabel().then {
         $0.textColor = .white
-        $0.text = "인천광역시"
+        $0.text = "도시"
         $0.font = UIFont(name: "SFProDisplay-Regular", size: 36)
         $0.textAlignment = .center
     }
     
     private var tempLabel = UILabel().then {
         $0.textColor = .white
-        $0.text = "21°"
+        $0.text = "온도"
         $0.font = UIFont(name: "SFProDisplay-Regular", size: 102)
         $0.textAlignment = .center
     }
     
     private var wheatherStatusLabel = UILabel().then {
         $0.textColor = .white
-        $0.text = "흐림"
+        $0.text = "날씨 상태"
         $0.font = UIFont(name: "SFProDisplay-Regular", size: 25)
         $0.textAlignment = .center
     }
     
     private var minTempLabel = UILabel().then {
         $0.textColor = .white
-        $0.text = "최저:19°"
+        $0.text = "최저"
         $0.font = UIFont(name: "SFProDisplay-Regular", size: 20)
     }
     
     private var maxTempLabel = UILabel().then {
         $0.textColor = .white
-        $0.text = "최고:29°"
+        $0.text = "최고"
         $0.font = UIFont(name: "SFProDisplay-Regular", size: 20)
     }
     
@@ -145,6 +151,15 @@ extension WeatherDetailViewController {
          tenDaysWeatherTableView].forEach {
             self.tenDaysWeatherView.addSubview($0)
         }
+        
+//        가져온 데이터를 라벨에 할당
+        cityLabel.text = cityLabelText
+        tempLabel.text = tempLabelText
+        wheatherStatusLabel.text = wheatherStatusLabelText
+        minTempLabel.text = minTempLabelText
+        maxTempLabel.text = maxTempLabelText
+        
+        
         
         self.setLayout()
     }

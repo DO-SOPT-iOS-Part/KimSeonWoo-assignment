@@ -13,7 +13,6 @@ class WeatherListViewController: UIViewController {
     
     let locationArray: [String] = ["gongju", "gwangju", "gunsan", "daegu", "daejeon"]
     var currentWeatherArray: [CurrentWeatherDataModel] = []
-    var resultArray: [CurrentWeatherDataModel] = []
     
     
     
@@ -97,7 +96,7 @@ class WeatherListViewController: UIViewController {
                     currentWeatherArray.append(response)
                     weatherListViewData.append( .init(location: response.name, weather: response.weather.first?.main ?? "", temperature: Int(response.main.temp), maxTemperature: Int(response.main.tempMax), minTemperature: Int(response.main.tempMin), lon: response.coord.lon,  lat: response.coord.lat))
                     Task {
-                        print(response)
+                        //                        print(response)
                     }
                 }
             } catch {
@@ -106,15 +105,38 @@ class WeatherListViewController: UIViewController {
         }
     }
     
-    @objc func tapListView() {
-        let weatherDetailViewController = WeatherDetailViewController()
-        
-        self.navigationController?.pushViewController(weatherDetailViewController, animated: true)
-        self.navigationController?.isNavigationBarHidden = true
-        
-        
-        
+    @objc func tapListView(_ sender: UITapGestureRecognizer) {
+        if let indexPath = tableView.indexPathForRow(at: sender.location(in: tableView)) {
+            // 터치한 셀의 indexPath를 확인하고 데이터에 접근
+            let tappedCellData = isFiltering ? filteredLocationData[indexPath.row] : weatherListViewData[indexPath.row]
+            
+            // 나머지 처리를 수행하거나 다음 뷰 컨트롤러로 데이터를 전달할 수 있습니다.
+            let weatherDetailViewController = WeatherDetailViewController()
+            weatherDetailViewController.cityLabelText = tappedCellData.location
+            weatherDetailViewController.tempLabelText = "\(tappedCellData.temperature) °C"
+            weatherDetailViewController.wheatherStatusLabelText = tappedCellData.weather
+            weatherDetailViewController.minTempLabelText = "\(tappedCellData.minTemperature) °C"
+            weatherDetailViewController.maxTempLabelText = "\(tappedCellData.maxTemperature) °C"
+            
+            print("----------")
+            print(Int(tappedCellData.lon), Int(tappedCellData.lat))
+            
+            Task {
+                do {
+                    guard let response = try await GetHourlyWeatherService.shared.GetHourlyWeatherData(lon:Int(tappedCellData.lon) , lat: Int(tappedCellData.lat)) else { return }
+                    print(response)
+                } catch {
+                    print(error)
+                }
+            }
+            
+            self.navigationController?.pushViewController(weatherDetailViewController, animated: true)
+            self.navigationController?.isNavigationBarHidden = true }
     }
+}
+
+private func setHourlyWeatherData(lon: Int, lat: Int) {
+    
 }
 
 extension WeatherListViewController: UITableViewDelegate {}
