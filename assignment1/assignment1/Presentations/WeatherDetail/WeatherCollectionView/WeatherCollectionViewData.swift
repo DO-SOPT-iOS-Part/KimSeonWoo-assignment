@@ -20,15 +20,5 @@ struct WeatherCollectionViewData {
     }
 }
 
-var weatherCollectionViewData: [WeatherCollectionViewData] = [.init(time: "12시", weather: "cloudBolt", temperature: "21°"),
-                                                              .init(time: "12시", weather: "cloudBolt", temperature: "21°"),
-                                                              .init(time: "12시", weather: "cloudBolt", temperature: "21°"),
-                                                              .init(time: "12시", weather: "cloudBolt", temperature: "21°"),
-                                                              .init(time: "12시", weather: "cloudBolt", temperature: "21°"),
-                                                              .init(time: "12시", weather: "cloudBolt", temperature: "21°"),
-                                                              .init(time: "12시", weather: "cloudBolt", temperature: "21°"),
-                                                              .init(time: "12시", weather: "cloudBolt", temperature: "21°"),
-                                                              .init(time: "12시", weather: "cloudBolt", temperature: "21°"),
-                                                              .init(time: "12시", weather: "cloudBolt", temperature: "21°"),
-                                                              .init(time: "12시", weather: "cloudBolt", temperature: "21°"),
+var weatherCollectionViewData: [WeatherCollectionViewData] = [
 ]

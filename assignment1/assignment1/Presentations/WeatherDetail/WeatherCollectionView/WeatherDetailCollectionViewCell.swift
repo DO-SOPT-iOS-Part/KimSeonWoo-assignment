@@ -19,11 +19,12 @@ class WeatherDetailCollectionViewCell: UICollectionViewCell {
     
     private var weatherImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
+        $0.tintColor = .white
     }
     
     private var temperatureLabel = UILabel().then {
         $0.textColor = .white
-        $0.font = UIFont(name: "SFProDisplay-Regular", size: 19)
+        $0.font = UIFont(name: "SFProDisplay-Regular", size: 22)
     }
     
     override init(frame: CGRect) {
@@ -41,7 +42,7 @@ class WeatherDetailCollectionViewCell: UICollectionViewCell {
         self.addSubview(temperatureLabel)
         
         timeLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(4)
+            $0.top.equalToSuperview().offset(14)
             $0.centerX.equalToSuperview()
         }
         
@@ -51,7 +52,7 @@ class WeatherDetailCollectionViewCell: UICollectionViewCell {
         }
         
         temperatureLabel.snp.makeConstraints {
-            $0.bottom.equalToSuperview().offset(4)
+            $0.bottom.equalToSuperview().offset(-10)
             $0.centerX.equalTo(timeLabel)
         }
     }
@@ -59,23 +60,49 @@ class WeatherDetailCollectionViewCell: UICollectionViewCell {
     func bindData(data: WeatherCollectionViewData) {
         self.timeLabel.text = data.time
         setWeatherImage(weather: data.weather)
-        self.temperatureLabel.text = data.temperature
+        self.temperatureLabel.text = String(data.temperature)
     }
-    
+//icon 값에 따른 이미지 부여
     private func setWeatherImage(weather: String) {
         switch weather {
-        case "cloudBolt":
-            weatherImageView.image = UIImage(named: "cloudBolt")
-        case "cloudMoon":
-            weatherImageView.image = UIImage(named: "cloudMoon")
-        case "softRain":
-            weatherImageView.image = UIImage(named: "softRain")
-        case "heavyRain":
-            weatherImageView.image = UIImage(named: "heavyRain")
-        case "rainWithSun":
-            weatherImageView.image = UIImage(named: "rainWithSun")
+        case "01d":
+            weatherImageView.image = UIImage(named: "01d")
+        case "01n":
+            weatherImageView.image = UIImage(named: "01d")
+        case "02d":
+            weatherImageView.image = UIImage(named: "02d")
+        case "02n":
+            weatherImageView.image = UIImage(named: "02d")
+        case "03d":
+            weatherImageView.image = UIImage(named: "03d")
+        case "03n":
+            weatherImageView.image = UIImage(named: "03d")
+        case "04d":
+            weatherImageView.image = UIImage(named: "04d")
+        case "04n":
+            weatherImageView.image = UIImage(named: "04d")
+        case "09d":
+            weatherImageView.image = UIImage(named: "09d")
+        case "09n":
+            weatherImageView.image = UIImage(named: "09d")
+        case "10d":
+            weatherImageView.image = UIImage(named: "10d")
+        case "10n":
+            weatherImageView.image = UIImage(named: "10d")
+        case "11d":
+            weatherImageView.image = UIImage(named: "11d")
+        case "11n":
+            weatherImageView.image = UIImage(named: "11d")
+        case "13d":
+            weatherImageView.image = UIImage(named: "13d")
+        case "13n":
+            weatherImageView.image = UIImage(named: "13d")
+        case "50d":
+            weatherImageView.image = UIImage(named: "50d")
+        case "50n":
+            weatherImageView.image = UIImage(named: "50d")
         default:
-            weatherImageView.image = UIImage(named: "cloudMoon")
+            weatherImageView.image = UIImage(named: "03d")
         }
     }
     

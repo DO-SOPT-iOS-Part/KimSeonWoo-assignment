@@ -19,7 +19,7 @@ class WetherListTableViewCell: UITableViewCell {
         $0.font = UIFont(name: "SFProDisplay-Bold", size: 24)
         $0.textColor = .white
     }
-    let locationLabel = UILabel().then {
+    let timeLabel = UILabel().then {
         $0.font = UIFont(name: "SFProDisplay-Regular", size: 17)
         $0.textColor = .white
     }
@@ -61,14 +61,14 @@ class WetherListTableViewCell: UITableViewCell {
             $0.leading.trailing.equalToSuperview().inset(20)
         }
         
-        [myLocationLabel, locationLabel, weatherLabel, temperatureLabel, maxtemperatureLabel, mintemperatureLabel].forEach {
+        [myLocationLabel, timeLabel, weatherLabel, temperatureLabel, maxtemperatureLabel, mintemperatureLabel].forEach {
             self.backgroundImageView.addSubview($0)
         }
         myLocationLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
             $0.leading.equalToSuperview().inset(16)
         }
-        locationLabel.snp.makeConstraints {
+        timeLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(44)
             $0.leading.equalToSuperview().inset(16)
         }
@@ -82,19 +82,30 @@ class WetherListTableViewCell: UITableViewCell {
         }
         maxtemperatureLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(10)
-            $0.leading.equalToSuperview().inset(196)
+            $0.leading.equalToSuperview().inset(205)
         }
         mintemperatureLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(10)
-            $0.leading.equalToSuperview().inset(262)
+            $0.leading.equalToSuperview().inset(272)
         }
+    }
+    //    현재시간을 반환하기 위한 함수입니다.
+    func getCurrentTime() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        
+        let currentTime = Date()
+        let formattedTime = dateFormatter.string(from: currentTime)
+        
+        return formattedTime
     }
     
     func bindData(data: WeatherListViewData) {
-        self.locationLabel.text = data.location
+        self.myLocationLabel.text = data.location
+        self.timeLabel.text = getCurrentTime()
         self.weatherLabel.text = data.weather
-        self.temperatureLabel.text = data.temperature
-        self.maxtemperatureLabel.text = data.maxTemperature
-        self.mintemperatureLabel.text = data.minTemperature
+        self.temperatureLabel.text = "\(data.temperature)°"
+        self.maxtemperatureLabel.text = "최고:\(data.maxTemperature)°"
+        self.mintemperatureLabel.text = "최저:\(data.minTemperature)°"
     }
 }
