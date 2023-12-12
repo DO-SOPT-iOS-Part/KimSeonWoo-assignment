@@ -11,21 +11,9 @@ import Then
 
 class WeatherDetailCollectionViewCell: UICollectionViewCell {
     static let identifier: String = "WeatherDetailCollectionViewCell"
-    
-    private var timeLabel = UILabel().then {
-        $0.textColor = .white
-        $0.font = UIFont(name: "SFProDisplay-Regular", size: 17)
-    }
-    
-    private var weatherImageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFit
-        $0.tintColor = .white
-    }
-    
-    private var temperatureLabel = UILabel().then {
-        $0.textColor = .white
-        $0.font = UIFont(name: "SFProDisplay-Regular", size: 22)
-    }
+    private var timeLabel = UILabel()
+    private var weatherImageView = UIImageView()
+    private var temperatureLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -57,12 +45,30 @@ class WeatherDetailCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    private func setStyle() {
+        timeLabel.do {
+            $0.textColor = .white
+            $0.font = UIFont(name: "SFProDisplay-Regular", size: 17)
+        }
+        
+        weatherImageView.do {
+            $0.contentMode = .scaleAspectFit
+            $0.tintColor = .white
+        }
+        
+        temperatureLabel.do {
+            $0.textColor = .white
+            $0.font = UIFont(name: "SFProDisplay-Regular", size: 22)
+        }
+        
+    }
+    
     func bindData(data: WeatherCollectionViewData) {
         self.timeLabel.text = data.time
         setWeatherImage(weather: data.weather)
         self.temperatureLabel.text = String(data.temperature)
     }
-//icon 값에 따른 이미지 부여
+
     private func setWeatherImage(weather: String) {
         switch weather {
         case "01d":

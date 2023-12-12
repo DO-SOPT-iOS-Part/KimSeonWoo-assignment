@@ -98,19 +98,6 @@ class WeatherListViewController: UIViewController {
         return translations[name] ?? name
     }
     
-    //시간 데이터를 포맷팅하는 함수
-    private func extractHour(from dateString: String) -> String? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        
-        if let date = dateFormatter.date(from: dateString) {
-            let hourFormatter = DateFormatter()
-            hourFormatter.dateFormat = "HH"
-            return hourFormatter.string(from: date)
-        } else {
-            return nil
-        }
-    }
     // 날씨 최초 리스트뷰 데이터 Api 관련 부분
     private func setCurrentWeatherData() {
         Task {

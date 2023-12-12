@@ -10,39 +10,18 @@ import UIKit
 class WetherListTableViewCell: UITableViewCell {
     static let identifier: String = "WetherListTableViewCell"
     
-    let backgroundImageView = UIImageView().then {
-        $0.image = UIImage(named: "listBackground")
-        $0.contentMode = .scaleAspectFill
-    }
-    let myLocationLabel = UILabel().then {
-        $0.text = "나의 위치"
-        $0.font = UIFont(name: "SFProDisplay-Bold", size: 24)
-        $0.textColor = .white
-    }
-    let timeLabel = UILabel().then {
-        $0.font = UIFont(name: "SFProDisplay-Regular", size: 17)
-        $0.textColor = .white
-    }
-    let weatherLabel = UILabel().then {
-        $0.font = UIFont(name: "SFProDisplay-Regular", size: 16)
-        $0.textColor = .white
-    }
-    let temperatureLabel = UILabel().then {
-        $0.font = UIFont(name: "SFProDisplay-Light", size: 52)
-        $0.textColor = .white
-    }
-    let maxtemperatureLabel = UILabel().then {
-        $0.font = UIFont(name: "SFProDisplay-Regular", size: 15)
-        $0.textColor = .white
-    }
-    let mintemperatureLabel = UILabel().then {
-        $0.font = UIFont(name: "SFProDisplay-Regular", size: 15)
-        $0.textColor = .white
-    }
+    let backgroundImageView = UIImageView()
+    let myLocationLabel = UILabel()
+    let timeLabel = UILabel()
+    let weatherLabel = UILabel()
+    let temperatureLabel = UILabel()
+    let maxtemperatureLabel = UILabel()
+    let mintemperatureLabel = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.setLayout()
+        setStyle()
+        setLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -87,6 +66,39 @@ class WetherListTableViewCell: UITableViewCell {
         mintemperatureLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(10)
             $0.leading.equalToSuperview().inset(272)
+        }
+    }
+    
+    private func setStyle() {
+        backgroundImageView.do {
+            $0.image = UIImage(named: "listBackground")
+            $0.contentMode = .scaleAspectFill
+        }
+        
+        myLocationLabel.do {
+            $0.text = "나의 위치"
+            $0.font = UIFont(name: "SFProDisplay-Bold", size: 24)
+            $0.textColor = .white
+        }
+        timeLabel.do {
+            $0.font = UIFont(name: "SFProDisplay-Regular", size: 17)
+            $0.textColor = .white
+        }
+        weatherLabel.do {
+            $0.font = UIFont(name: "SFProDisplay-Regular", size: 16)
+            $0.textColor = .white
+        }
+        temperatureLabel.do {
+            $0.font = UIFont(name: "SFProDisplay-Light", size: 52)
+            $0.textColor = .white
+        }
+        maxtemperatureLabel.do {
+            $0.font = UIFont(name: "SFProDisplay-Regular", size: 15)
+            $0.textColor = .white
+        }
+        mintemperatureLabel.do {
+            $0.font = UIFont(name: "SFProDisplay-Regular", size: 15)
+            $0.textColor = .white
         }
     }
     
