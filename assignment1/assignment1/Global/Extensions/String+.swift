@@ -19,7 +19,7 @@ func getCurrentTime() -> String {
 }
 
 //시간 데이터를 포맷팅하는 함수
-private func extractHour(from dateString: String) -> String? {
+func extractHour(from dateString: String) -> String? {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
     
