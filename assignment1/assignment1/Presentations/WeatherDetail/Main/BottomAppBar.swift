@@ -14,7 +14,6 @@ import Then
 class BottomAppBar: UIView {
     
     //    weak var delegate: BottomAppBarDelegate?
-    
     private let lineView = UIView()
     private let mapButton = UIButton()
     private let pageControl = UIPageControl()

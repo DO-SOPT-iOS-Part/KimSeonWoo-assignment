@@ -8,6 +8,18 @@
 import UIKit
 
 class WetherListTableViewCell: UITableViewCell {
+    var weatherListViewData: WeatherListViewData? {
+        didSet {
+            guard let data = weatherListViewData else { return }
+            self.myLocationLabel.text = data.location
+            self.timeLabel.text = getCurrentTime()
+            self.weatherLabel.text = data.weather
+            self.temperatureLabel.text = "\(data.temperature)°"
+            self.maxtemperatureLabel.text = "최고:\(data.maxTemperature)°"
+            self.mintemperatureLabel.text = "최저:\(data.minTemperature)°"
+        }
+    }
+    
     static let identifier: String = "WetherListTableViewCell"
     
     let backgroundImageView = UIImageView()
@@ -22,6 +34,7 @@ class WetherListTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setStyle()
         setLayout()
+
     }
     
     required init?(coder: NSCoder) {
@@ -100,14 +113,5 @@ class WetherListTableViewCell: UITableViewCell {
             $0.font = UIFont(name: "SFProDisplay-Regular", size: 15)
             $0.textColor = .white
         }
-    }
-    
-    func bindData(data: WeatherListViewData) {
-        self.myLocationLabel.text = data.location
-        self.timeLabel.text = getCurrentTime()
-        self.weatherLabel.text = data.weather
-        self.temperatureLabel.text = "\(data.temperature)°"
-        self.maxtemperatureLabel.text = "최고:\(data.maxTemperature)°"
-        self.mintemperatureLabel.text = "최저:\(data.minTemperature)°"
     }
 }

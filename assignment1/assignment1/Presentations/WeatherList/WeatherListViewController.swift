@@ -10,10 +10,13 @@ import SnapKit
 import Then
 
 class WeatherListViewController: UIViewController {
+    var weatherListViewData: [WeatherListViewData?] = [] {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
     
     let locationArray: [String] = ["gongju", "gwangju", "gunsan", "daegu", "daejeon"]
-    var currentWeatherArray: [CurrentWeatherDataModel] = []
-    var hourlyWeatherArray: Array<Dictionary<String, Any>> = []
     var filteredLocationData = [WeatherListViewData]()
     private let moreButtonItem = UIBarButtonItem()
     private let locationSearchController = UISearchController()
@@ -21,7 +24,7 @@ class WeatherListViewController: UIViewController {
     private let tableView = UITableView(frame: .zero, style: .plain).then {
         $0.backgroundColor = .black
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setSearchController()
@@ -100,46 +103,30 @@ class WeatherListViewController: UIViewController {
     
     // 날씨 최초 리스트뷰 데이터 Api 관련 부분
     private func setCurrentWeatherData() {
-        Task {
-            do {
-                for city in locationArray {
-                    guard let response = try await GetCurrentWeatherService.shared.GetCurrentWeatherData(cityName: city) else { return }
-                    currentWeatherArray.append(response)
-                    weatherListViewData.append( .init(location: translateCityNameToKorean(name: response.name), weather: response.weather.first?.description ?? "description", temperature: Int(response.main.temp), maxTemperature: Int(response.main.tempMax), minTemperature: Int(response.main.tempMin), lon: response.coord.lon,  lat: response.coord.lat))
-                }
-                reload()
-            } catch {
-                print(error)
+        for city in locationArray {
+            getCurrentWeather(cityName: city) {
+                
             }
         }
-    }
+            self.reload()
 
+    }
+    
     @objc func tapListView(_ sender: UITapGestureRecognizer) {
         if let indexPath = tableView.indexPathForRow(at: sender.location(in: tableView)) {
             // 터치한 셀의 indexPath를 확인하고 데이터에 접근
             let tappedCellData = isFiltering ? filteredLocationData[indexPath.row] : weatherListViewData[indexPath.row]
-            
             //WeatherDetailViewController 라벨 데이터를 전달
             let weatherDetailViewController = WeatherDetailViewController()
-            weatherDetailViewController.cityLabelText = tappedCellData.location
-            weatherDetailViewController.tempLabelText = "\(tappedCellData.temperature)°"
-            weatherDetailViewController.wheatherStatusLabelText = tappedCellData.weather
-            weatherDetailViewController.minMaxTempLabelText = "최저:\(tappedCellData.minTemperature)°  최고:\(tappedCellData.maxTemperature)°"
+            weatherDetailViewController.cityLabelText = tappedCellData?.location
+            weatherDetailViewController.tempLabelText = "\(String(describing: tappedCellData?.temperature))°"
+            weatherDetailViewController.wheatherStatusLabelText = tappedCellData?.weather
+            weatherDetailViewController.minMaxTempLabelText = "최저:\(String(describing: tappedCellData?.minTemperature))°  최고:\(String(describing: tappedCellData?.maxTemperature))°"
             
             // 푸시가 데이터가 바뀐 이후의 코드를 맨 마지막으로 이동
             Task {
                 do {
-                    guard let response = try await GetHourlyWeatherService.shared.GetHourlyWeatherData(lon:Int(tappedCellData.lon) , lat: Int(tappedCellData.lat)) else { return }
-                    
-                    for item in response.list {
-                        hourlyWeatherArray.append(["time": extractHour(from: item.dtTxt), "weather": item.weather.first?.icon ?? "icon", "temp": Int(item.main.tempMin)])
-                    }
-                    
-                    weatherDetailViewController.descriptionText = "\(extractHour(from: response.list[1].dtTxt) ?? "text")시에 \(response.list[1].weather.first?.description ?? "description")과, \(extractHour(from: response.list[2].dtTxt) ?? "text")시에 \(response.list[2].weather.first?.description ?? "description")가 예상됩니다."
-                    
-                    for data in hourlyWeatherArray {
-                        weatherCollectionViewData.append(WeatherCollectionViewData(time: "\(data["time"] as? String ?? "")시", weather: data["weather"] as? String ?? "", temperature: "\(data["temp"] as? Int ?? 0)°"))
-                    }
+                    getHourlyWeather(lat: Int(tappedCellData?.lat ?? 0), lon: Int(tappedCellData?.lon ?? 0) )
                     
                     self.navigationController?.pushViewController(weatherDetailViewController, animated: true)
                     self.navigationController?.isNavigationBarHidden = true
@@ -154,7 +141,8 @@ class WeatherListViewController: UIViewController {
 extension WeatherListViewController: UITableViewDelegate {}
 extension WeatherListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return isFiltering ? filteredLocationData.count : currentWeatherArray.count
+        return isFiltering ? filteredLocationData.count : weatherListViewData.count
+        //        navigationController?.pushViewController(pageController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -167,7 +155,7 @@ extension WeatherListViewController: UITableViewDataSource {
         let background = UIView()
         background.backgroundColor = .clear
         cell.selectedBackgroundView = background
-        cell.bindData(data: dataToDisplay) // 데이터 원본 대신 필터링된 데이터를 전달
+        cell.weatherListViewData = dataToDisplay
         return cell
     }
 }
@@ -183,7 +171,66 @@ extension WeatherListViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text else { return }
-        filteredLocationData = weatherListViewData.filter { return $0.location.lowercased().contains(text.lowercased()) }
+        filteredLocationData = weatherListViewData.compactMap { $0 }
+            .filter { data in
+                return data.location.lowercased().contains(text.lowercased())
+        }
+
         self.tableView.reloadData()
     }
+}
+
+// 네트워크
+
+extension WeatherListViewController {
+    func getCurrentWeather(cityName: String, completion: @escaping () -> Void) {
+        CurrentAPI.shared.getCurrentWeather(cityName: cityName) { (response) in
+            switch response {
+            case .success(let data):
+                print("success 🚨", data)
+                if let data = data as? WeatherListViewData {
+                    self.weatherListViewData.append(data)
+                    print("🚨\(self.weatherListViewData)")
+                }
+            case .requestErr(let statusCode):
+                print("requestErr", statusCode)
+            case .pathErr:
+                print(".pathErr")
+            case .serverErr:
+                print("serverErr")
+            case .networkFail:
+                print("networkFail")
+            }
+        }
+    }
+
+    func getHourlyWeather(lat: Int, lon: Int) {
+//        CurrentAPI.shared.getHourlyWeather(lat: lat, lon: lon, completion: { (response) in
+////            switch response {
+////            case .success(let data):
+////                print("success", data)
+////                if let data = data as? HourlyWelcome {
+////                    for item in data.list {
+////                        self.hourlyWeatherArray.append(["time": extractHour(from: item.dtTxt), "weather": item.weather.first?.icon ?? "icon", "temp": Int(item.main.tempMin)])
+////                    }
+//                    
+////                    weatherDetailViewController.descriptionText = "\(extractHour(from: response.list[1].dtTxt) ?? "text")시에 \(response.list[1].weather.first?.description ?? "description")과, \(extractHour(from: response.list[2].dtTxt) ?? "text")시에 \(response.list[2].weather.first?.description ?? "description")가 예상됩니다."
+//                    
+//                    for data in self.hourlyWeatherArray {
+//                        weatherCollectionViewData.append(WeatherCollectionViewData(time: "\(data["time"] as? String ?? "")시", weather: data["weather"] as? String ?? "", temperature: "\(data["temp"] as? Int ?? 0)°"))
+//                    }
+//                }
+//            case .requestErr(let statusCode):
+//                print("requestErr", statusCode)
+//            case .pathErr:
+//                print(".pathErr")
+//            case .serverErr:
+//                print("serverErr")
+//            case .networkFail:
+//                print("networkFail")
+//            }
+//        })
+    }
+//    
+//    
 }

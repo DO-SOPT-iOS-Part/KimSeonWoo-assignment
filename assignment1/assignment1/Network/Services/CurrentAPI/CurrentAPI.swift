@@ -24,7 +24,7 @@ final class CurrentAPI {
                 
                 let networkResult = self.judgeCurrentWeatherStatus(by: statusCode, data)
                 completion(networkResult)
-                
+                    
             case .failure(let error):
                 print(error)
             }
