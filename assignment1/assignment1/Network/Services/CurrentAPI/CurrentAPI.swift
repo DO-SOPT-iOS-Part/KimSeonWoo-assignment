@@ -23,6 +23,7 @@ final class CurrentAPI {
                 let data = response.data
                 
                 let networkResult = self.judgeCurrentWeatherStatus(by: statusCode, data)
+                print(data)
                 completion(networkResult)
                     
             case .failure(let error):
@@ -49,15 +50,15 @@ final class CurrentAPI {
     
     private func judgeCurrentWeatherStatus(by statusCode: Int, _ data: Data) -> NetworkResult<Any> {
         let decoder = JSONDecoder()
-        guard let decodedData = try? decoder.decode(GenericResponse<CurrentWeatherDataModel>.self, from: data)
+        guard let decodedData = try? decoder.decode(CurrentWeatherDataModel.self, from: data)
         else {
             return .pathErr
         }
         switch statusCode {
         case 200:
-            return .success(decodedData.data ?? "success")
+            return .success(decodedData)
         case 400..<500:
-            return .requestErr(decodedData.code)
+            return .requestErr(decodedData)
         case 500:
             return .serverErr
         default:

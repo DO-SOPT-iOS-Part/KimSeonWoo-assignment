@@ -105,7 +105,6 @@ class WeatherListViewController: UIViewController {
     private func setCurrentWeatherData() {
         for city in locationArray {
             getCurrentWeather(cityName: city) {
-                
             }
         }
             self.reload()
@@ -155,7 +154,7 @@ extension WeatherListViewController: UITableViewDataSource {
         let background = UIView()
         background.backgroundColor = .clear
         cell.selectedBackgroundView = background
-        cell.weatherListViewData = dataToDisplay
+        cell.WeatherListViewData = dataToDisplay
         return cell
     }
 }
@@ -187,10 +186,9 @@ extension WeatherListViewController {
         CurrentAPI.shared.getCurrentWeather(cityName: cityName) { (response) in
             switch response {
             case .success(let data):
-                print("success 🚨", data)
+                print("🚨\(data)")
                 if let data = data as? WeatherListViewData {
                     self.weatherListViewData.append(data)
-                    print("🚨\(self.weatherListViewData)")
                 }
             case .requestErr(let statusCode):
                 print("requestErr", statusCode)

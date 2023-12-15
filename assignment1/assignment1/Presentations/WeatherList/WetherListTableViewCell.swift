@@ -8,9 +8,9 @@
 import UIKit
 
 class WetherListTableViewCell: UITableViewCell {
-    var weatherListViewData: WeatherListViewData? {
+    var WeatherListViewData: WeatherListViewData? {
         didSet {
-            guard let data = weatherListViewData else { return }
+            guard let data = WeatherListViewData else { return }
             self.myLocationLabel.text = data.location
             self.timeLabel.text = getCurrentTime()
             self.weatherLabel.text = data.weather
