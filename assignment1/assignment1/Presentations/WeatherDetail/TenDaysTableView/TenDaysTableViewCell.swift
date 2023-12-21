@@ -12,24 +12,11 @@ import Then
 class TenDaysTableViewCell: UITableViewCell {
     static let identifier: String = "TenDaysTableViewCell"
     
-    private let dateLabel = UILabel().then {
-        $0.textColor = .white
-        $0.font = UIFont(name: "SFProDisplay-Regular", size: 22)
-    }
-    
+    private let dateLabel = UILabel()
     private let weatherImage = UIImageView()
-    
-    private let minTempLabel = UILabel().then {
-        $0.textColor = .white
-        $0.font = UIFont(name: "SFProDisplay-Regular", size: 22)
-    }
-    
+    private let minTempLabel = UILabel()
     private let degreeBarImage = UIImageView()
-    
-    private let maxTempLabel = UILabel().then {
-        $0.textColor = .white
-        $0.font = UIFont(name: "SFProDisplay-Regular", size: 22)
-    }
+    private let maxTempLabel = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -75,6 +62,23 @@ class TenDaysTableViewCell: UITableViewCell {
             $0.centerY.equalToSuperview()
             $0.top.equalToSuperview().inset(14)
             $0.leading.equalTo(degreeBarImage.snp.trailing).offset(6)
+        }
+    }
+    
+    private func setStyle() {
+        dateLabel.do {
+            $0.textColor = .white
+            $0.font = UIFont(name: "SFProDisplay-Regular", size: 22)
+        }
+        
+        minTempLabel.do {
+            $0.textColor = .white
+            $0.font = UIFont(name: "SFProDisplay-Regular", size: 22)
+        }
+
+        maxTempLabel.do {
+            $0.textColor = .white
+            $0.font = UIFont(name: "SFProDisplay-Regular", size: 22)
         }
     }
     

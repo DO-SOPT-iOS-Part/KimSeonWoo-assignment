@@ -16,20 +16,8 @@ struct WeatherListViewData {
     let minTemperature: Int
     let lon: Double
     let lat: Double
-    
-    init(location: String, weather: String, temperature: Int, maxTemperature: Int, minTemperature: Int, lon: Double, lat: Double) {
-        self.location = location
-        self.weather = weather
-        self.temperature = temperature
-        self.maxTemperature = maxTemperature
-        self.minTemperature = minTemperature
-        self.lat = lat
-        self.lon = lon
-    }
 }
 
-var weatherListViewData: [WeatherListViewData] = [
-]
 
 
 

@@ -14,13 +14,12 @@ import Then
 class BottomAppBar: UIView {
     
     //    weak var delegate: BottomAppBarDelegate?
-    
     private let lineView = UIView()
     private let mapButton = UIButton()
     private let pageControl = UIPageControl()
     var listButton = UIButton().then {
         $0.setImage(UIImage(named: "menuIcon"), for: .normal)
-        $0.addTarget(self, action: #selector(WeatherDetailViewController.listButtonTapped), for: .touchUpInside)
+        $0.addTarget(BottomAppBar.self, action: #selector(WeatherDetailViewController.listButtonTapped), for: .touchUpInside)
     }
     
     init() {
@@ -65,13 +64,13 @@ class BottomAppBar: UIView {
     }
     
     private func setStyle() {
-        [lineView].forEach{
+        lineView.do {
             $0.backgroundColor = UIColor.white.withAlphaComponent(0.3)
         }
-        [mapButton].forEach{
+        mapButton.do{
             $0.setImage(UIImage(named: "mapIcon"), for: .normal)
         }
-        [pageControl].forEach {
+        pageControl.do {
             $0.currentPage = 0
             $0.numberOfPages = 2
             $0.setIndicatorImage(UIImage(named: "paperAirplaneIcon"), forPage: 0)
